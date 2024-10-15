@@ -8,6 +8,11 @@ namespace RefugioDelSol
 {
     class Controladora
     {
+        public List<Reserva> Reservas { get; set; }
+        public Controladora()
+        {
+            this.Reservas = new List<Reserva>();
+        }
 
     }
 }
