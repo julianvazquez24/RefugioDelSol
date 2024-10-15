@@ -15,7 +15,7 @@ namespace RefugioDelSol
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
         public int CantidadValijas { get; set; } // limitar a 5 x persona
-        public List<Huesped> Huespedes { get; set; }
+
 
         public Huesped(int idHuesped, string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
         {
@@ -24,7 +24,7 @@ namespace RefugioDelSol
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
             this.CantidadValijas = cantidadValijas;
-            this.Huespedes = new List<Huesped>();
+
         }
 
         private static int NuevoId(){

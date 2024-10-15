@@ -15,7 +15,6 @@ namespace RefugioDelSol
         public DateTime FechaInicioReserva { get; set; }
         public DateTime FechaFinReserva { get; set; }
         public int PrecioBase { get; set; }
-        public List<Reserva> Reservas { get; set; }
 
         public Reserva(int idReserva, DateTime fechaInicio, DateTime fechaFin, int precioBase)
         {
@@ -23,7 +22,7 @@ namespace RefugioDelSol
             this.FechaInicioReserva = fechaInicio;
             this.FechaFinReserva = fechaFin;
             this.PrecioBase = precioBase;
-            this.Reservas = new List<Reserva>();
+            
         }
 
         private static int NuevoId()
