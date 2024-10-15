@@ -11,8 +11,9 @@ namespace RefugioDelSol
         public List<Reserva> Reservas { get; set; }
         public Controladora()
         {
-             = new List<Reserva>();
-        }
 
+            this.Reservas  = new List<Reserva>();
+
+        }
     }
 }
