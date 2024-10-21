@@ -68,13 +68,15 @@ namespace RefugioDelSol
 
         public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
         {
-            huespedes.Sort();
-            Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
+            huespedes.Sort((a, b) => a.NombreHuesped.CompareTo(b.NombreHuesped));
+
+            Console.WriteLine("Lista de huéspedes ordenada alfabéticamente");
             Console.WriteLine("-------------------------------------------");
             foreach (var huesped in huespedes)
             {
                 Console.WriteLine("{0}", huesped);
             }
         }
+
     }
 }

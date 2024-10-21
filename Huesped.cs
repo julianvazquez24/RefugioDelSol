@@ -34,7 +34,7 @@ namespace RefugioDelSol
 
         public override string ToString()
         {
-            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}";
+            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}, Cantidad de Valijas: {CantidadValijas}";
         }
 
 
