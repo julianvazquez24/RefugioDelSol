@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RefugioDelSol
 {
-    class Controladora
+    public class Controladora
     {
         public List<Reserva> Reservas { get; set; }
         public List<Huesped> Huespedes { get; set; }
@@ -17,7 +17,7 @@ namespace RefugioDelSol
             this.Huespedes = new List<Huesped>();
             this.Apartamentos = new List<Apartamento>();
         }
-        
+
         public Reserva AgregarReserva(Reserva nuevaReserva)
         {
             this.Reservas.Add(nuevaReserva);
@@ -29,7 +29,7 @@ namespace RefugioDelSol
             Console.WriteLine("Ingrese el ID de la reserva que quieres cancelar: ");
             int idReserva = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            for(int i = 0; i < this.Reservas.Count; i++)
+            for (int i = 0; i < this.Reservas.Count; i++)
             {
                 if (this.Reservas[i].IdReserva == idReserva)
                 {
@@ -56,11 +56,25 @@ namespace RefugioDelSol
         public List<Apartamento> ListarApartamentosMasReservados()
         {
             List<Apartamento> apartamentosMasReservados = new List<Apartamento>();
-            foreach(var reserva in Reservas)
+            foreach (var reserva in Reservas)
             {
                 apartamentosMasReservados.Add(reserva.Apartamento);
             }
             return apartamentosMasReservados;
+        }
+
+
+
+
+        public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
+        {
+            huespedes.Sort();
+            Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
+            Console.WriteLine("-------------------------------------------");
+            foreach (var huesped in huespedes)
+            {
+                Console.WriteLine("{0}", huesped);
+            }
         }
     }
 }

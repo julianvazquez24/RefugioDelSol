@@ -4,30 +4,40 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RefugioDelSol
 {
-    public class Huesped
+    public class Huesped 
     {
-        private static int UltimoId {get; set; }
-        public int IdHuesped { get; set; }
+        private static int UltimoId { get; set; } 
+        public int IdHuesped { get; private set; }
         public string NombreHuesped { get; set; }
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
-        public int CantidadValijas { get; set; } // limitar a 5 x persona
-        
-        public Huesped(int idHuesped, string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
+        public int CantidadValijas { get; set; }
+
+        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
         {
-            this.IdHuesped = idHuesped;
+            this.IdHuesped = NuevoId();
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
             this.CantidadValijas = cantidadValijas;
         }
 
-        private static int NuevoId(){
-            Huesped.UltimoId =+ 1;
-            return Huesped.UltimoId;
+        private static int NuevoId()
+        {
+            UltimoId += 1;
+            return UltimoId;
         }
+
+        public override string ToString()
+        {
+            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}";
+        }
+
+
+
     }
 }
