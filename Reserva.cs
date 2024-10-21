@@ -34,15 +34,20 @@ namespace RefugioDelSol
             return Reserva.UltimoId;
         }
 
-        public int EstPromedioPorApartamento()
-        {
-            if (Reservas.Count == 0)
-            {
-                return 0; // si no hay reservas va a devolver 0
-            }
-            int sumaDuracion = Reservas.Sum(reserva => ((reserva.FechaFinReserva - reserva.FechaInicioReserva).Days));
-            return sumaDuracion / Reservas.Count; // me va a dar el resultado del promedio de duracion de todas las reservas en dias del apartamento
-        }
+        // public int EstPromedioPorApartamento()
+        // {
+            
+        //     if (Reservas.Count == 0)
+        //     {
+        //         return 0; // si no hay reservas va a devolver 0
+        //     }
+        //     int sumaDuracion = Reservas.Sum(reserva => ((reserva.FechaFinReserva - reserva.FechaInicioReserva).Days));
+        //     return sumaDuracion / Reservas.Count; // me va a dar el resultado del promedio de duracion de todas las reservas en dias del apartamento
+        // }
+
+        public int EstPromedioPorApartamento
+
+    
         public int EstPromedioDurEst()
         {
             if (Reservas.Count == 0)
@@ -63,11 +68,11 @@ namespace RefugioDelSol
             int duracion = (FechaFinReserva - FechaInicioReserva).Days;
             if(duracion > 30)
             {
-                Console.WriteLine("La reserva puede exceder los 30 dias de estadia.");
+                Console.WriteLine("La reserva no puede exceder los 30 dias de estadia.");
             }
             else
             {
-                Console.WriteLine($"La reserva tiene una duracion valida {duracion} dias.");
+                Console.WriteLine($"La reserva tiene una duracion valida, {duracion} dias.");
             }
         }
         public bool EsHabitacionDisponible()

@@ -16,9 +16,9 @@ namespace RefugioDelSol
         public int TelefonoHuesped { get; set; }
         public int CantidadValijas { get; set; } // limitar a 5 x persona
         
-        public Huesped(int idHuesped, string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
+        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
         {
-            this.IdHuesped = idHuesped;
+            this.IdHuesped = NuevoId();
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;

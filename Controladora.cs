@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RefugioDelSol
 {
-    class Controladora
+    public class Controladora
     {
         public List<Reserva> Reservas { get; set; }
         public List<Huesped> Huespedes { get; set; }
@@ -61,6 +61,20 @@ namespace RefugioDelSol
                 apartamentosMasReservados.Add(reserva.Apartamento);
             }
             return apartamentosMasReservados;
+        }
+
+
+
+
+        public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
+        {
+            huespedes.Sort();
+            Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
+            Console.WriteLine("-------------------------------------------");
+            foreach (var huesped in huespedes)
+            {
+                Console.WriteLine("{0}", huesped);
+            }
         }
     }
 }
