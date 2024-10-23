@@ -17,7 +17,7 @@ namespace RefugioDelSol
             this.Huespedes = new List<Huesped>();
             this.Apartamentos = new List<Apartamento>();
         }
-        
+
         public Reserva AgregarReserva(Reserva nuevaReserva)
         {
             this.Reservas.Add(nuevaReserva);
@@ -29,7 +29,7 @@ namespace RefugioDelSol
             Console.WriteLine("Ingrese el ID de la reserva que quieres cancelar: ");
             int idReserva = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            for(int i = 0; i < this.Reservas.Count; i++)
+            for (int i = 0; i < this.Reservas.Count; i++)
             {
                 if (this.Reservas[i].IdReserva == idReserva)
                 {
@@ -56,7 +56,7 @@ namespace RefugioDelSol
         public List<Apartamento> ListarApartamentosMasReservados()
         {
             List<Apartamento> apartamentosMasReservados = new List<Apartamento>();
-            foreach(var reserva in Reservas)
+            foreach (var reserva in Reservas)
             {
                 apartamentosMasReservados.Add(reserva.Apartamento);
             }

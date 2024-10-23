@@ -1,24 +1,12 @@
 ﻿using RefugioDelSol;
 
+Huesped zayn = new Huesped("zayn", "ndjndncj", 06188484, 1);
+Huesped juan = new Huesped("Juan", "Alvez", 98321456, 3);
+Huesped pedro = new Huesped("Pedro", "Perez", 94444444, 4);
+Huesped ana = new Huesped("Ana", "Martinez", 98218238, 5);
 
-Huesped juan = new Huesped("Juan", "Alvez", 098321456, 3);
-Huesped pedro = new Huesped("Pedro", "Perez", 094444444, 4);
-Huesped ana = new Huesped("Ana", "Martinez", 098218238, 5);
+List<Huesped> huespedes = new List<Huesped> { zayn, juan, pedro, ana };
 
-List<Huesped> huespedes = new List<Huesped> { juan, pedro, ana };
+Controladora controladora = new Controladora();
 
-huespedes.Sort();
-
-Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
-Console.WriteLine("-------------------------------------------");
-
-foreach (var huesped in huespedes)
-{
-    Console.WriteLine("{0}", huesped);
-}
-
-
-
-
-
-
+controladora.ListaAlfabeticaHuespedes(huespedes);
