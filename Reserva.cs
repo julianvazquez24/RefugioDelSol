@@ -44,10 +44,7 @@ namespace RefugioDelSol
         //     int sumaDuracion = Reservas.Sum(reserva => ((reserva.FechaFinReserva - reserva.FechaInicioReserva).Days));
         //     return sumaDuracion / Reservas.Count; // me va a dar el resultado del promedio de duracion de todas las reservas en dias del apartamento
         // }
-
-        public int EstPromedioPorApartamento
-
-    
+        
         public int EstPromedioDurEst()
         {
             if (Reservas.Count == 0)

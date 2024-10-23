@@ -16,6 +16,8 @@ namespace RefugioDelSol
         public string EsteOesteMedio {get; set;}
         public int CantidadDormitorios {get; set;}
         public int SuperficieApartamento {  get; set;}
+
+        public List<Apartamento> Apartamentos {get; set;} = new List<Apartamento>();
      
         public Apartamento( int precioApartamento, string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
         {
