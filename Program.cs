@@ -1,16 +1,6 @@
 ﻿using RefugioDelSol;
 using System.ComponentModel.Design;
 
-//Huesped zayn = new Huesped("zayn", "ndjndncj", 06188484, 1);
-//Huesped juan = new Huesped("Juan", "Alvez", 98321456, 3);
-//Huesped pedro = new Huesped("Pedro", "Perez", 94444444, 4);
-//Huesped ana = new Huesped("Ana", "Martinez", 98218238, 5);
-
-//List<Huesped> huespedes = new List<Huesped> { zayn, juan, pedro, ana };
-
-//Controladora controladora = new Controladora();
-
-//controladora.ListaAlfabeticaHuespedes(huespedes);
 
 string input = "";
 
@@ -24,7 +14,7 @@ while (input != "fin")
     Console.WriteLine("Escribe fin para salir");
     Console.WriteLine("Seleccione una opcion: ");
 
-    input = Console.ReadLine();
+    input = Console.ReadLine() ?? string.Empty;
 
     if (input == "1")
     {
@@ -33,26 +23,25 @@ while (input != "fin")
         Console.WriteLine("(1) Agregar Huesped");
         Console.WriteLine("(2) Eliminar Huesped");
         Console.WriteLine("(3) Modificar Huesped");
-        Console.WriteLine("(4) Listar Huespedes Alfabeticamente");
+        Console.WriteLine("(4) Listar Huespedes");
 
-        int opcionHuesped = int.Parse(Console.ReadLine());
+        int opcionHuesped = int.Parse(Console.ReadLine() ?? string.Empty);
         switch (opcionHuesped)
         {
             case 1:
-                Console.Clear();
-                Console.WriteLine("Agregar huesped");
+                Huesped.AgregarHuesped();
                 break;
 
             case 2:
-                Console.WriteLine("Eliminar huesped");
+                Huesped.EliminarHuesped();
                 break;
 
             case 3:
-                Console.WriteLine("Modificar huesped");
+                Huesped.ModificarHuesped();
                 break;
 
             case 4:
-                Console.WriteLine("Lista huespedes alfabeticamente");
+                Huesped.ListarHuespedes();
                 break;
 
             default:
@@ -70,44 +59,19 @@ while (input != "fin")
         Console.WriteLine("(3) Modificar Apartamento");
         Console.WriteLine("(4) Listar Apartamentos ");
 
-        int opcionApartamento = int.Parse(Console.ReadLine()); ;
+        int opcionApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
         switch (opcionApartamento)
         {
             case 1:
-                Console.Clear();
-                Console.WriteLine("Agregar Apartamento:");
-
-                Console.Write("Ingrese el numero del apartamento: ");
-                int numApartamento = int.Parse(Console.ReadLine());
-
-                Console.Write("Ingrese el precio del apartamento: ");
-                int precioApartamento = int.Parse(Console.ReadLine());
-                
-                Console.Write("Ingrese la orientacion (Sur o Norte): ");
-                string surNorte = Console.ReadLine();
-
-                Console.Write("Ingrese la orientacion (Este/Oeste/Medio): ");
-                string esteOesteMedio = Console.ReadLine();
-
-                Console.Write("Ingrese la cantidad de dormitorios: ");
-                int cantidadDormitorios = int.Parse(Console.ReadLine());
-
-                Console.Write("Ingrese la superficie del apartamento: ");
-                int superficieApartamento = int.Parse(Console.ReadLine());
-
-                Apartamento nuevoApartamento = new Apartamento
+                Apartamento.AgregarApartamento();
                 break;
-
-
-
+                
             case 2:
                 Console.Clear();
                 Console.WriteLine("Eliminar Apartamento:");
                 Console.Write("Ingrese el ID del apartamento que desea eliminar: ");
-                int idEliminar = int.Parse(Console.ReadLine());
-
-                
+                int idEliminar = int.Parse(Console.ReadLine() ?? string.Empty); 
                 break;
 
             case 3:
@@ -116,7 +80,7 @@ while (input != "fin")
 
             case 4:
                 Console.WriteLine("Lista de apartamentos:");
-                gestionApartamentos.ListarApartamentos();
+                Apartamento.ListarApartamentos();
                 break;
 
             default:
@@ -134,7 +98,7 @@ while (input != "fin")
         Console.WriteLine("(3) Modificar Reserva");
         Console.WriteLine("(4) Listar Reservas");
 
-        int opcionReserva = int.Parse(Console.ReadLine());
+        int opcionReserva = int.Parse(Console.ReadLine() ?? string.Empty);
 
         switch (opcionReserva)
         {
@@ -169,7 +133,7 @@ while (input != "fin")
         Console.WriteLine("(3) Reservas del huesped");
         Console.WriteLine("(4) Apartamentos con mas reservas");
 
-        int opcionEstadistica = int.Parse(Console.ReadLine());
+        int opcionEstadistica = int.Parse(Console.ReadLine() ?? string.Empty);
 
         switch (opcionEstadistica)
         {
@@ -194,7 +158,5 @@ while (input != "fin")
                 break;
         }
     }
-
-   
 }
 

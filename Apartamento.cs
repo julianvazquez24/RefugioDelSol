@@ -18,13 +18,12 @@ namespace RefugioDelSol
         public int CantidadDormitorios {get; set;}
         public int SuperficieApartamento {  get; set;}
 
-        public List<Apartamento> Apartamentos {get; set;} = new List<Apartamento>();
+        public static List<Apartamento> Apartamentos {get; set;} = new List<Apartamento>();
      
-        public Apartamento( int precioApartamento, int idApartamento, string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
+        public Apartamento( int precioApartamento,string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
         {
             this.NumApartamento = NuevoNum();
             this.PrecioApartamento = precioApartamento;
-            this.IdApartamento = idApartamento;
             this.SurNorteApartamento= surNorteApartamento;
             this.EsteOesteMedio = esteOesteMedio;   
             this.CantidadDormitorios = cantidadDormitorios;
@@ -37,17 +36,43 @@ namespace RefugioDelSol
             return Apartamento.UltimoNum;
         }
 
-        public void AgregarApartamento(Apartamento apartamento)
+        public static Apartamento PedirDatosApartamento()
         {
-            Apartamentos.Add(apartamento);
-            Console.WriteLine("Apartamento agregado correctamente");
+            Console.Clear();
+            Console.WriteLine("Agregar Apartamento:");
+
+            Console.WriteLine("Ingrese el precio del apartamento: ");
+            int precioApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            Console.WriteLine("Ingrese la orientacion (Sur o Norte): ");
+            string surNorte = Console.ReadLine() ?? string.Empty;
+
+            Console.WriteLine("Ingrese la orientacion (Este/Oeste/Medio): ");
+            string esteOesteMedio = Console.ReadLine() ?? string.Empty;
+
+            Console.WriteLine("Ingrese la cantidad de dormitorios: ");
+            int cantidadDormitorios = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            Console.WriteLine("Ingrese la superficie del apartamento: ");
+            int superficieApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            return new Apartamento(precioApartamento,surNorte,esteOesteMedio,cantidadDormitorios,superficieApartamento);
         }
 
-        public Apartamento BuscarApartamentoPorId(int idApartamento)
+        public static void AgregarApartamento()
         {
-            foreach(Apartamento apartamentos in this.Apartamentos)
+            Apartamento nuevoApartamento = PedirDatosApartamento();
+            Apartamentos.Add(nuevoApartamento);
+            Console.WriteLine("Apartamento agregado correctamente");
+            
+        }
+
+
+        public Apartamento BuscarApartamentoPorNum(int numApartamento)
+        {
+            foreach(Apartamento apartamentos in Apartamentos)
             {
-                if(apartamentos.IdApartamento == idApartamento)
+                if(apartamentos.NumApartamento == numApartamento)
                 {
                     return apartamentos;
                 }
@@ -55,15 +80,15 @@ namespace RefugioDelSol
             return null;
         }
 
-        public bool EliminarApartamento(int IdApartamento)
+        public bool EliminarApartamento(int numApartamento)
         {
-            Console.Write("Escriba el id del apartamento que desea eliminar");
-            int idApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
+            Console.Write("Escriba el numero del apartamento que desea eliminar");
+            int numApartamentoInt = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            Apartamento? apartamento = this.BuscarApartamentoPorId(idApartamento);
+            Apartamento? apartamento = this.BuscarApartamentoPorNum(numApartamentoInt);
             if(apartamento != null)
             {
-                this.Apartamentos.Remove(apartamento);
+                Apartamentos.Remove(apartamento);
                 return true;
             }
             return false;
@@ -71,10 +96,10 @@ namespace RefugioDelSol
 
         public bool ModificarApartamento(int nuevoNumApartamento, int nuevoPrecioApartamento, string nuevoSurNorteApartamento, string nuevoEsteOesteMedio, int nuevaCantidadDormitorios, int nuevaSuperficieApartamento)
         {
-            Console.WriteLine("Escriba el id del apartamento que desea modificar");
-            int idApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine("Escriba el numero del apartamento que desea modificar");
+            int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            Apartamento? apartamento = this.BuscarApartamentoPorId(idApartamento);
+            Apartamento? apartamento = this.BuscarApartamentoPorNum(numApartamento);
             if(apartamento != null)
             {
                 apartamento.NumApartamento = nuevoNumApartamento;
@@ -93,20 +118,23 @@ namespace RefugioDelSol
             }
         }
 
-        public void ListarApartamentos()
+        public static void ListarApartamentos()
         {
-            if(Apartamentos.Count == 0)
+            Console.Clear();
+            Console.WriteLine("Lista de Apartamentos");
+            foreach ( var apartamento in Apartamentos)
             {
-                Console.WriteLine("No hay apartamentos registrados");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine($"Numero: {apartamento.NumApartamento}");
+                Console.WriteLine($"Precio: {apartamento.PrecioApartamento}");
+                Console.WriteLine($"Orientacion N/S: {apartamento.SurNorteApartamento}");
+                Console.WriteLine($"Orientacion E/O/M: {apartamento.EsteOesteMedio}");
+                Console.WriteLine($"Cantidad dormitorios: {apartamento.CantidadDormitorios}");
+                Console.WriteLine($"Superficie: {apartamento.SuperficieApartamento} m2");
             }
-            else
-            {
-                Console.WriteLine("Lista de los apartamentos");
-                foreach(var apartamento in Apartamentos)
-                {
-                    Console.WriteLine(apartamento);
-                }
-            }
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
 
 
