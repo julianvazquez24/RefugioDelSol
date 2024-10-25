@@ -61,43 +61,70 @@ while (input != "fin")
         }
     }
 
-    
-
-    else if (input == "2") 
+    else if (input == "2")
     {
         Console.Clear();
         Console.WriteLine("Por favor selecciona una opcion");
         Console.WriteLine("(1) Agregar Apartamento");
         Console.WriteLine("(2) Eliminar Apartamento");
         Console.WriteLine("(3) Modificar Apartamento");
-        Console.WriteLine("(4) Listar Apartamentos Mas Reservados");
-        
-        int opcionApartamento = int.Parse(Console.ReadLine());;
-        
-        switch(opcionApartamento)
+        Console.WriteLine("(4) Listar Apartamentos ");
+
+        int opcionApartamento = int.Parse(Console.ReadLine()); ;
+
+        switch (opcionApartamento)
         {
             case 1:
-            Console.WriteLine("Agregar apartamento");
-            break;
+                Console.Clear();
+                Console.WriteLine("Agregar Apartamento:");
+
+                Console.Write("Ingrese el numero del apartamento: ");
+                int numApartamento = int.Parse(Console.ReadLine());
+
+                Console.Write("Ingrese el precio del apartamento: ");
+                int precioApartamento = int.Parse(Console.ReadLine());
+                
+                Console.Write("Ingrese la orientacion (Sur o Norte): ");
+                string surNorte = Console.ReadLine();
+
+                Console.Write("Ingrese la orientacion (Este/Oeste/Medio): ");
+                string esteOesteMedio = Console.ReadLine();
+
+                Console.Write("Ingrese la cantidad de dormitorios: ");
+                int cantidadDormitorios = int.Parse(Console.ReadLine());
+
+                Console.Write("Ingrese la superficie del apartamento: ");
+                int superficieApartamento = int.Parse(Console.ReadLine());
+
+                Apartamento nuevoApartamento = new Apartamento
+                break;
+
+
 
             case 2:
-            Console.WriteLine("Eliminar apartamento");
-            break;
+                Console.Clear();
+                Console.WriteLine("Eliminar Apartamento:");
+                Console.Write("Ingrese el ID del apartamento que desea eliminar: ");
+                int idEliminar = int.Parse(Console.ReadLine());
+
+                
+                break;
 
             case 3:
-            Console.WriteLine("Modificar apartamento");
-            break;
+                Console.WriteLine("Modificar apartamento");
+                break;
 
             case 4:
-            Console.WriteLine("Lista de los apartamentos mas reservados");
-            break;
+                Console.WriteLine("Lista de apartamentos:");
+                gestionApartamentos.ListarApartamentos();
+                break;
 
             default:
-            Console.WriteLine("Opcion no valida.");
-            break;
+                Console.WriteLine("Opcion no valida.");
+                break;
         }
     }
-    
+
     else if (input == "3")
     {
         Console.Clear();
@@ -109,31 +136,31 @@ while (input != "fin")
 
         int opcionReserva = int.Parse(Console.ReadLine());
 
-        switch(opcionReserva)
+        switch (opcionReserva)
         {
             case 1:
-            Console.WriteLine("Agregar reserva");
-            break;
+                Console.WriteLine("Agregar reserva");
+                break;
 
             case 2:
-            Console.WriteLine("Eliminar reserva");
-            break;
+                Console.WriteLine("Eliminar reserva");
+                break;
 
             case 3:
-            Console.WriteLine("Modificar reserva");
-            break;
+                Console.WriteLine("Modificar reserva");
+                break;
 
             case 4:
-            Console.WriteLine("Lista de las reservas");
-            break;
+                Console.WriteLine("Lista de las reservas");
+                break;
 
             default:
-            Console.WriteLine("Opcion no valida");
-            break;
+                Console.WriteLine("Opcion no valida");
+                break;
         }
     }
-    
-    else if(input == "4")
+
+    else if (input == "4")
     {
         Console.Clear();
         Console.WriteLine("Por favor selecciona una opcion de estadistica");
@@ -144,27 +171,30 @@ while (input != "fin")
 
         int opcionEstadistica = int.Parse(Console.ReadLine());
 
-        switch(opcionEstadistica)
+        switch (opcionEstadistica)
         {
             case 1:
-            Console.WriteLine("Lista de los apartamentos disponibles");
-            break;
+                Console.WriteLine("Lista de los apartamentos disponibles");
+                break;
 
             case 2:
-            Console.WriteLine("Reservas del dia");
-            break;
+                Console.WriteLine("Reservas del dia");
+                break;
 
             case 3:
-            Console.WriteLine("Reservas del huesped");
-            break;
+                Console.WriteLine("Reservas del huesped");
+                break;
 
             case 4:
-            Console.WriteLine("Apartamentos con mas reservas");
-            break;
+                Console.WriteLine("Apartamentos con mas reservas");
+                break;
 
             default:
-            Console.WriteLine("Opcion no valida");
-            break;
+                Console.WriteLine("Opcion no valida");
+                break;
         }
     }
+
+   
 }
+

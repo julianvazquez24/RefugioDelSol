@@ -69,7 +69,7 @@ namespace RefugioDelSol
 
         public bool ModificarHuesped( string nuevoNombre, string nuevoApellido, int nuevoTelefono, int nuevasValijas)
         {
-            Console.WriteLine("Escriba el ID del huesped que desea Modificar");
+            Console.WriteLine("Escriba el ID del huesped que desea modificar");
             int idHuesped = int.Parse (Console.ReadLine() ?? string.Empty);
             Huesped? huesped = this.BuscarHuespedPorId(idHuesped);
             if(huesped != null)

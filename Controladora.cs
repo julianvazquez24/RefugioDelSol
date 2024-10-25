@@ -62,10 +62,7 @@ namespace RefugioDelSol
             }
             return apartamentosMasReservados;
         }
-
-
-
-
+        
         public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
         {
             huespedes.Sort();
