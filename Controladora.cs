@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace RefugioDelSol
 {
     public class Controladora
     {
+        
         public List<Reserva> Reservas { get; set; }
         public List<Huesped> Huespedes { get; set; }
         public List<Apartamento> Apartamentos { get; set; }
@@ -54,7 +56,7 @@ namespace RefugioDelSol
             return reservaPorHuesped;
         }
 
-        public List<Apartamento> ListarApartamentosMasReservados()
+        public List<Apartamento> ListaApartamentosMasReservados()
         {
             List<Apartamento> apartamentosMasReservados = new List<Apartamento>();
             foreach (var reserva in Reservas)
@@ -64,7 +66,7 @@ namespace RefugioDelSol
             return apartamentosMasReservados;
         }
         
-        public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
+        public void ListaAlfabeticamenteHuespedes(List<Huesped> huespedes)
         {
             huespedes.Sort();
             Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
@@ -75,40 +77,33 @@ namespace RefugioDelSol
             }
         }
 
-        public List<Huesped> ListarReservaFecha(DateTime fecha)
+        public List<Reserva> ListaReservaFecha(DateTime fecha)
         {
-            List<Huesped> reservasPorFecha = new List<Huesped>();
-            List<Huesped> listaHuespedes = ObtenerListaDeHuespedes();
-            foreach (var huesped in ListarHuespedes)
+            List<Reserva> reservasPorFecha = new List<Reserva>();
+            
+            foreach (var reserva in Reservas)
             {
-                if (huesped.FechaFinReserva.Date == fecha.Date)
+                if (reserva.FechaFinReserva.Date == fecha.Date)
                 {
-                    reservasPorFecha.Add(huesped);
+                    reservasPorFecha.Add(reserva);
                 }
             }
             return reservasPorFecha;
         }
-
-        public void ListarReservasPorHuesped(List<Reserva> reservas)
+        
+        public List<Apartamento> ListaApartamentosDisponibles()
         {
-            List<Reserva> listaReservasPorHuesped = new List<Reserva>();
-            foreach(var reserva in reservas)
+            List<Apartamento> apartamentosDisponibles = new List<Apartamento>();
+
+            foreach (var apartamento in Apartamentos)
             {
-                
+                if (apartamento.EsDisponible)
+                {
+                    apartamentosDisponibles.Add(apartamento);
+                }
             }
+            return apartamentosDisponibles;
         }
-
-      //  public void ListarApartamentosMasReservados(List<)
-
-        // public List<Apartamento> ListaApartamentosDisponibles()
-        // {
-        //     List<Apartamento> ListaApartamentosDisponibles = new List<Apartamento>();
-
-        //     foreach(var apartamento in ListaApartamento)
-        //     {
-                
-        //     }
-
-        // }
+        
     }
 }

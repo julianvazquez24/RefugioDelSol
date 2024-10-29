@@ -16,11 +16,11 @@ namespace RefugioDelSol
         public string SurNorteApartamento {get; set;}
         public string EsteOesteMedio {get; set;}
         public int CantidadDormitorios {get; set;}
-        public int SuperficieApartamento {  get; set;}
-
+        public int SuperficieApartamento { get; set;}
+        public bool EsDisponible { get; set; }
         public static List<Apartamento> Apartamentos {get; set;} = new List<Apartamento>();
      
-        public Apartamento( int precioApartamento,string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
+        public Apartamento( int precioApartamento,string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento, bool esDisponible)
         {
             this.NumApartamento = NuevoNum();
             this.PrecioApartamento = precioApartamento;
@@ -28,6 +28,7 @@ namespace RefugioDelSol
             this.EsteOesteMedio = esteOesteMedio;   
             this.CantidadDormitorios = cantidadDormitorios;
             this.SuperficieApartamento = superficieApartamento;
+            this.EsDisponible = esDisponible;
         }
 
         private static int NuevoNum()
