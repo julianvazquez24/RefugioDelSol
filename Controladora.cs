@@ -77,13 +77,13 @@ namespace RefugioDelSol
             }
         }
 
-        public List<Reserva> ListaReservaFecha(DateTime fecha)
+        public List<Reserva> ListaReservaFecha(DateOnly fecha)
         {
             List<Reserva> reservasPorFecha = new List<Reserva>();
             
             foreach (var reserva in Reservas)
             {
-                if (reserva.FechaFinReserva.Date == fecha.Date)
+                if (reserva.FechaFinReserva == fecha)
                 {
                     reservasPorFecha.Add(reserva);
                 }
@@ -91,19 +91,18 @@ namespace RefugioDelSol
             return reservasPorFecha;
         }
         
-        public List<Apartamento> ListaApartamentosDisponibles()
-        {
-            List<Apartamento> apartamentosDisponibles = new List<Apartamento>();
+        //public List<Apartamento> ListaApartamentosDisponibles()
+        //{
+        //    List<Apartamento> apartamentosDisponibles = new List<Apartamento>();
 
-            foreach (var apartamento in Apartamentos)
-            {
-                if (apartamento.EsDisponible)
-                {
-                    apartamentosDisponibles.Add(apartamento);
-                }
-            }
-            return apartamentosDisponibles;
+        //    foreach (var apartamento in Apartamentos)
+        //    {
+        //        if (apartamento.EsDisponible)
+        //        {
+        //            apartamentosDisponibles.Add(apartamento);
+        //        }
+        //    }
+        //    return apartamentosDisponibles;
         }
         
     }
-}

@@ -17,10 +17,10 @@ namespace RefugioDelSol
         public string EsteOesteMedio {get; set;}
         public int CantidadDormitorios {get; set;}
         public int SuperficieApartamento { get; set;}
-        public bool EsDisponible { get; set; }
+
         public static List<Apartamento> Apartamentos {get; set;} = new List<Apartamento>();
      
-        public Apartamento( int precioApartamento,string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento, bool esDisponible)
+        public Apartamento( int precioApartamento,string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
         {
             this.NumApartamento = NuevoNum();
             this.PrecioApartamento = precioApartamento;
@@ -28,7 +28,6 @@ namespace RefugioDelSol
             this.EsteOesteMedio = esteOesteMedio;   
             this.CantidadDormitorios = cantidadDormitorios;
             this.SuperficieApartamento = superficieApartamento;
-            this.EsDisponible = esDisponible;
         }
 
         private static int NuevoNum()
@@ -39,6 +38,7 @@ namespace RefugioDelSol
 
         public static Apartamento PedirDatosApartamento()
         {
+
             Console.Clear();
             Console.WriteLine("Agregar Apartamento:");
 
@@ -46,7 +46,7 @@ namespace RefugioDelSol
             int precioApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
             Console.WriteLine("Ingrese la orientacion (Sur o Norte): ");
-            string surNorte = Console.ReadLine() ?? string.Empty;
+            string surNorteApartamento = Console.ReadLine() ?? string.Empty;
 
             Console.WriteLine("Ingrese la orientacion (Este/Oeste/Medio): ");
             string esteOesteMedio = Console.ReadLine() ?? string.Empty;
@@ -57,7 +57,7 @@ namespace RefugioDelSol
             Console.WriteLine("Ingrese la superficie del apartamento: ");
             int superficieApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            return new Apartamento(precioApartamento,surNorte,esteOesteMedio,cantidadDormitorios,superficieApartamento);
+            return new Apartamento(precioApartamento,surNorteApartamento,esteOesteMedio,cantidadDormitorios,superficieApartamento);
         }
 
         public static void AgregarApartamento()

@@ -70,27 +70,39 @@ namespace RefugioDelSol
         }
 
 
-        public static Reserva PedirDatosReserva()
+        public static Reserva PedirDatosReserva() 
         {
             Console.Clear();
             Console.WriteLine("Agregar Reserva");
+            int idReserva = NuevoId();
 
-            Console.WriteLine("Agregar Fecha de Ingreso");
-            DateOnly fechaInicio = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
-            Console.WriteLine("Agregar Fecha de Salida");
-            DateOnly fechaFin = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
+            DateOnly fechaInicio, fechaFin;
 
-            BuscarApartamentoDisponible(fechaInicio,fechaFin);
+            try
+            {
+                Console.WriteLine("Agregue una fecha de Ingreso (yyyy-MM-dd):");
+                fechaInicio = DateOnly.Parse(Console.ReadLine() ?? throw new Exception("Fecha Invalida"));
+
+                Console.WriteLine("Agregue una fecha de Salida (yyyy-MM-dd):");
+                fechaFin = DateOnly.Parse(Console.ReadLine() ?? throw new Exception("Fecha inválida."));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"Ha tenido el siguiente error: {exception.Message}");
+                return null;
+            }
+
+            BuscarApartamentoDisponible(fechaInicio, fechaFin);
             Console.WriteLine("Ingresar Numero de apartamento");
             int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            
+
             Console.WriteLine("Agregar Precio Base:");
             int precioBase = int.Parse(Console.ReadLine() ?? string.Empty);
 
             Console.WriteLine("Agregar Cantidad de Valijas:");
             int cantidadValija = int.Parse(Console.ReadLine() ?? string.Empty);
-            return new Reserva(fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija);
+            return new Reserva(idReserva,fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija);
         } 
 
 
@@ -101,7 +113,7 @@ namespace RefugioDelSol
             foreach (Reserva reserva in Reservas)
             {
                 
-                if (fechaFin < reserva.FechaInicioReserva && fechaInicio < reserva.FechaInicioReserva|| reserva.FechaFinReserva < fechaInicio && reserva.FechaFinReserva < fechaFin)
+                if (fechaFin < reserva.FechaInicioReserva && fechaInicio < reserva.FechaInicioReserva || reserva.FechaFinReserva < fechaInicio && reserva.FechaFinReserva < fechaFin)
                 {
                     ListaApartamentosDisponibles.Add(reserva.Apartamento);
                 }
@@ -128,6 +140,25 @@ namespace RefugioDelSol
             Reserva nuevaReserva = PedirDatosReserva();
             Reservas.Add(nuevaReserva);
             
+        }
+
+        public static void ListarReservas()
+        {
+            Console.Clear();
+            Console.WriteLine("Lista de huespedes");
+            foreach (var reserva in Reservas)
+            {
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine($"Id Reserva: {reserva.IdReserva}");
+            Console.WriteLine($"Fecha Inicio: {reserva.FechaInicioReserva}");
+            Console.WriteLine($"Fecha Fin: {reserva.FechaFinReserva}");
+            Console.WriteLine($"Numero de Apartamento {reserva.Apartamento.NumApartamento}");
+            Console.WriteLine($"Precio Base US$: {reserva.PrecioBase}");
+            Console.WriteLine($"Cantidad de valijas: {reserva.CantidadValijas}");
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            }    
         }
 
 

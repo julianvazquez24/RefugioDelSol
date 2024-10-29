@@ -4,6 +4,19 @@ using System.ComponentModel.Design;
 
 string input = "";
 
+Apartamento apartamento1 = new Apartamento(
+    200,"Sur","Este",1,200
+    );
+Apartamento apartamento2 = new Apartamento(
+    250, "Sur", "OEste", 4, 300
+    );
+Apartamento apartamento3 = new Apartamento(
+    300, "Norte", "Este", 3, 150
+    );
+Apartamento apartamento4 = new Apartamento(
+    350, "Norte", "OEste", 2, 100
+    );
+
 while (input != "fin")
 {
     Console.WriteLine("Menu Refugio Del Sol");
@@ -104,6 +117,7 @@ while (input != "fin")
         {
             case 1:
                 Console.WriteLine("Agregar reserva");
+                Reserva.AgregarReserva();
                 break;
 
             case 2:
@@ -128,29 +142,47 @@ while (input != "fin")
     {
         
         Console.WriteLine("Por favor selecciona una opcion de estadistica");
-        Console.WriteLine("(1) Listar apartamentos disponibles");
-        Console.WriteLine("(2) Reservas del dia");
+        Console.WriteLine("(1) Lista apartamentos disponibles");
+        Console.WriteLine("(2) Lista reservas por fecha");
         Console.WriteLine("(3) Reservas del huesped");
         Console.WriteLine("(4) Apartamentos con mas reservas");
+        
 
         int opcionEstadistica = int.Parse(Console.ReadLine() ?? string.Empty);
 
+        Controladora controladora = new Controladora();
+        
         switch (opcionEstadistica)
         {
             case 1:
                 Console.WriteLine("Lista de los apartamentos disponibles");
+
+                List<Apartamento> apartamentosDisponibles = Reserva.ListaApartamentosDisponibles;
+                Console.WriteLine($"Lista de los apartamentos disponibles: {apartamentosDisponibles.Count}");
                 break;
 
             case 2:
-                Console.WriteLine("Reservas del dia");
+                Console.WriteLine("Lista reservas por fecha");
+                
+                
                 break;
 
             case 3:
                 Console.WriteLine("Reservas del huesped");
+
+                string NombreHuesped;
+                string ApellidoHuesped;
+                int TelefonoHuesped;
+                Huesped huesped = new Huesped (NombreHuesped = "Juan", ApellidoHuesped = "Perez", TelefonoHuesped = 09333333);
+                List<Reserva> reservaPorHuesped = controladora.ListarReservasPorHuesped(huesped);
+                Console.WriteLine($"Numero de reservas para el huesped {huesped.NombreHuesped}: {reservaPorHuesped.Count}");
                 break;
 
             case 4:
                 Console.WriteLine("Apartamentos con mas reservas");
+
+                List<Apartamento> apartamentosMasReservados = controladora.ListaApartamentosMasReservados();
+                Console.WriteLine($"Numero de apartamentos con mas reservas {apartamentosMasReservados.Count}");
                 break;
 
             default:
