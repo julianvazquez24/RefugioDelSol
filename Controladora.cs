@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace RefugioDelSol
 {
     public class Controladora
     {
+        
         public List<Reserva> Reservas { get; set; }
         public List<Huesped> Huespedes { get; set; }
         public List<Apartamento> Apartamentos { get; set; }
@@ -53,7 +55,7 @@ namespace RefugioDelSol
             return reservaPorHuesped;
         }
 
-        public List<Apartamento> ListarApartamentosMasReservados()
+        public List<Apartamento> ListaApartamentosMasReservados()
         {
             List<Apartamento> apartamentosMasReservados = new List<Apartamento>();
             foreach (var reserva in Reservas)
@@ -63,7 +65,7 @@ namespace RefugioDelSol
             return apartamentosMasReservados;
         }
         
-        public void ListaAlfabeticaHuespedes(List<Huesped> huespedes)
+        public void ListaAlfabeticamenteHuespedes(List<Huesped> huespedes)
         {
             huespedes.Sort();
             Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
@@ -73,5 +75,34 @@ namespace RefugioDelSol
                 Console.WriteLine("{0}", huesped);
             }
         }
+
+        public List<Reserva> ListaReservaFecha(DateTime fecha)
+        {
+            List<Reserva> reservasPorFecha = new List<Reserva>();
+            
+            foreach (var reserva in Reservas)
+            {
+                if (reserva.FechaFinReserva.Date == fecha.Date)
+                {
+                    reservasPorFecha.Add(reserva);
+                }
+            }
+            return reservasPorFecha;
+        }
+        
+        public List<Apartamento> ListaApartamentosDisponibles()
+        {
+            List<Apartamento> apartamentosDisponibles = new List<Apartamento>();
+
+            foreach (var apartamento in Apartamentos)
+            {
+                if (apartamento.EsDisponible)
+                {
+                    apartamentosDisponibles.Add(apartamento);
+                }
+            }
+            return apartamentosDisponibles;
+        }
+        
     }
 }

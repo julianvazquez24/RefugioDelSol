@@ -15,8 +15,6 @@ namespace RefugioDelSol
         public string NombreHuesped { get; set; }
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
-        public int CantidadValijas { get; set; }
-
         public static List<Huesped> Huespedes { get; set; } = new List<Huesped>(); 
 
         public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
@@ -25,7 +23,7 @@ namespace RefugioDelSol
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
-            this.CantidadValijas = cantidadValijas;
+            
         }
 
         private static int NuevoId()
@@ -46,10 +44,7 @@ namespace RefugioDelSol
 
             Console.WriteLine("Ingrese el telefono: ");
             int telefono = int.Parse(Console.ReadLine() ?? string.Empty);
-
-            Console.WriteLine("Ingrese la cantidad de valijas: ");
-            int cantidadValijas = int.Parse(Console.ReadLine() ?? string.Empty);
-
+            
             return new Huesped(nombre, apellido, telefono, cantidadValijas);
         }
 

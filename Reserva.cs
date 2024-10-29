@@ -13,18 +13,21 @@ namespace RefugioDelSol
     {
         private static int UltimoId {  get; set; }
         public int IdReserva { get; set; }
+        
         public DateTime FechaInicioReserva { get; set; }
         public DateTime FechaFinReserva { get; set; }
         public int PrecioBase { get; set; }
         public List<Reserva> Reservas { get; set; }
         public Huesped Huesped { get; set; }
         public Apartamento Apartamento { get; set; }
-        public Reserva(int idReserva, DateTime fechaInicio, DateTime fechaFin, int precioBase, Apartamento apartamento)
+        public int CantidadValijas { get; set; }
+        public Reserva(int idReserva, DateTime fechaInicio, DateTime fechaFin, int precioBase, int cantidadValijas)
         {
             this.IdReserva = idReserva;
             this.FechaInicioReserva = fechaInicio;
             this.FechaFinReserva = fechaFin;
             this.PrecioBase = precioBase;
+            this.CantidadValijas = cantidadValijas;
             this.Reservas = new List<Reserva>();
         }
 
@@ -33,18 +36,6 @@ namespace RefugioDelSol
             Reserva.UltimoId += 1; 
             return Reserva.UltimoId;
         }
-
-        // public int EstPromedioPorApartamento()
-        // {
-            
-        //     if (Reservas.Count == 0)
-        //     {
-        //         return 0; // si no hay reservas va a devolver 0
-        //     }
-        //     int sumaDuracion = Reservas.Sum(reserva => ((reserva.FechaFinReserva - reserva.FechaInicioReserva).Days));
-        //     return sumaDuracion / Reservas.Count; // me va a dar el resultado del promedio de duracion de todas las reservas en dias del apartamento
-        // }
-        
         public int EstPromedioDurEst()
         {
             if (Reservas.Count == 0)
