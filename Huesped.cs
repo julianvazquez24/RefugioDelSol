@@ -15,17 +15,15 @@ namespace RefugioDelSol
         public string NombreHuesped { get; set; }
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
-        public int CantidadValijas { get; set; }
-
+        
         public static List<Huesped> Huespedes { get; set; } = new List<Huesped>(); 
 
-        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped, int cantidadValijas)
+        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped)
         {
             this.IdHuesped = NuevoId();
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
-            this.CantidadValijas = cantidadValijas;
         }
 
         private static int NuevoId()
@@ -46,11 +44,8 @@ namespace RefugioDelSol
 
             Console.WriteLine("Ingrese el telefono: ");
             int telefono = int.Parse(Console.ReadLine() ?? string.Empty);
-
-            Console.WriteLine("Ingrese la cantidad de valijas: ");
-            int cantidadValijas = int.Parse(Console.ReadLine() ?? string.Empty);
-
-            return new Huesped(nombre, apellido, telefono, cantidadValijas);
+            
+            return new Huesped(nombre, apellido, telefono);
         }
 
         public static string PedirDatosString(string mensaje)
@@ -120,7 +115,6 @@ namespace RefugioDelSol
                 huesped.NombreHuesped = PedirDatosString("Ingrese un nuevo Nombre: ");
                 huesped.ApellidoHuesped = PedirDatosString("Ingrese un nuevo Apellido: ");
                 huesped.TelefonoHuesped = PedirDatosInt("Ingrese un nuevo Telefono: ");
-                huesped.CantidadValijas = PedirDatosInt("Ingrese una nueva Cantidad de Valijas: ");
                 Console.WriteLine("Huesped modificado correctamente");
                 return true;
             }
@@ -141,13 +135,11 @@ namespace RefugioDelSol
                 Console.WriteLine($"Nombre: {huesped.NombreHuesped}");
                 Console.WriteLine($"Apellido: {huesped.ApellidoHuesped}");
                 Console.WriteLine($"Telefono: {huesped.TelefonoHuesped}");
-                Console.WriteLine($"Cantidad Valijas: {huesped.CantidadValijas}");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
         }
         
-        public override string ToString()
-        {
-            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}, Cantidad de Valijas: {CantidadValijas}";
-        }
     }
 }

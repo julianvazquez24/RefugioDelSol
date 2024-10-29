@@ -94,7 +94,7 @@ namespace RefugioDelSol
             return false;
         }
 
-        public bool ModificarApartamento(int nuevoNumApartamento, int nuevoPrecioApartamento, string nuevoSurNorteApartamento, string nuevoEsteOesteMedio, int nuevaCantidadDormitorios, int nuevaSuperficieApartamento)
+        public bool ModificarApartamento()
         {
             Console.WriteLine("Escriba el numero del apartamento que desea modificar");
             int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
@@ -102,12 +102,11 @@ namespace RefugioDelSol
             Apartamento? apartamento = this.BuscarApartamentoPorNum(numApartamento);
             if(apartamento != null)
             {
-                apartamento.NumApartamento = nuevoNumApartamento;
-                apartamento.PrecioApartamento = nuevoPrecioApartamento;
-                apartamento.SurNorteApartamento = nuevoSurNorteApartamento;
-                apartamento.EsteOesteMedio = nuevoEsteOesteMedio;
-                apartamento.CantidadDormitorios = nuevaCantidadDormitorios;
-                apartamento.SuperficieApartamento = nuevaSuperficieApartamento;
+                apartamento.PrecioApartamento = Huesped.PedirDatosInt("Ingrese un nuevo precio:");
+                apartamento.SurNorteApartamento = Huesped.PedirDatosString("Ingrese una nueva opcion (Sur / Norte):");
+                apartamento.EsteOesteMedio = Huesped.PedirDatosString("Ingrese una nueva opcion (Este / Oeste / Medio):");
+                apartamento.CantidadDormitorios = Huesped.PedirDatosInt("Ingrese una nueva cantidad de Dormitorios):");
+                apartamento.SuperficieApartamento = Huesped.PedirDatosInt("Ingrese una nueva superficie:");
                 Console.WriteLine("Apartamento modificado correctamente");
                 return true;
             }

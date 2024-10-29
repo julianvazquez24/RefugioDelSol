@@ -18,12 +18,12 @@ while (input != "fin")
 
     if (input == "1")
     {
-        Console.Clear();
+        
         Console.WriteLine("Por favor selecciona una opcion");
         Console.WriteLine("(1) Agregar Huesped");
         Console.WriteLine("(2) Eliminar Huesped");
         Console.WriteLine("(3) Modificar Huesped");
-        Console.WriteLine("(4) Listar Huespedes");
+        Console.WriteLine("(4) Listar Huespedes"); 
 
         int opcionHuesped = int.Parse(Console.ReadLine() ?? string.Empty);
         switch (opcionHuesped)
@@ -52,7 +52,7 @@ while (input != "fin")
 
     else if (input == "2")
     {
-        Console.Clear();
+        
         Console.WriteLine("Por favor selecciona una opcion");
         Console.WriteLine("(1) Agregar Apartamento");
         Console.WriteLine("(2) Eliminar Apartamento");
@@ -68,7 +68,7 @@ while (input != "fin")
                 break;
                 
             case 2:
-                Console.Clear();
+                
                 Console.WriteLine("Eliminar Apartamento:");
                 Console.Write("Ingrese el ID del apartamento que desea eliminar: ");
                 int idEliminar = int.Parse(Console.ReadLine() ?? string.Empty); 
@@ -91,7 +91,7 @@ while (input != "fin")
 
     else if (input == "3")
     {
-        Console.Clear();
+        
         Console.WriteLine("Por favor selecciona una opcion");
         Console.WriteLine("(1) Agregar Reserva");
         Console.WriteLine("(2) Eliminar Reserva");
@@ -126,7 +126,7 @@ while (input != "fin")
 
     else if (input == "4")
     {
-        Console.Clear();
+        
         Console.WriteLine("Por favor selecciona una opcion de estadistica");
         Console.WriteLine("(1) Listar apartamentos disponibles");
         Console.WriteLine("(2) Reservas del dia");

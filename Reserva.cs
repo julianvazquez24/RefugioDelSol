@@ -13,19 +13,23 @@ namespace RefugioDelSol
     {
         private static int UltimoId {  get; set; }
         public int IdReserva { get; set; }
-        public DateTime FechaInicioReserva { get; set; }
-        public DateTime FechaFinReserva { get; set; }
+        public DateOnly FechaInicioReserva { get; set; }
+        public DateOnly FechaFinReserva { get; set; }
         public int PrecioBase { get; set; }
-        public List<Reserva> Reservas { get; set; }
+        public int CantidadValijas { get; set; }
+        public static List<Reserva> Reservas { get; set; } = new List<Reserva>();
+
+        public static List<Apartamento> ListaApartamentosDisponibles { get; set; } = new List<Apartamento>();
         public Huesped Huesped { get; set; }
         public Apartamento Apartamento { get; set; }
-        public Reserva(int idReserva, DateTime fechaInicio, DateTime fechaFin, int precioBase, Apartamento apartamento)
+        public Reserva(int idReserva, DateOnly fechaInicio, DateOnly fechaFin,int numApartamento, int precioBase, int cantidadValijas)
         {
-            this.IdReserva = idReserva;
+            this.IdReserva = NuevoId();
             this.FechaInicioReserva = fechaInicio;
             this.FechaFinReserva = fechaFin;
+            this.Apartamento.NumApartamento = numApartamento;
             this.PrecioBase = precioBase;
-            this.Reservas = new List<Reserva>();
+            this.CantidadValijas = cantidadValijas;
         }
 
         private static int NuevoId()
@@ -33,17 +37,6 @@ namespace RefugioDelSol
             Reserva.UltimoId += 1; 
             return Reserva.UltimoId;
         }
-
-        // public int EstPromedioPorApartamento()
-        // {
-            
-        //     if (Reservas.Count == 0)
-        //     {
-        //         return 0; // si no hay reservas va a devolver 0
-        //     }
-        //     int sumaDuracion = Reservas.Sum(reserva => ((reserva.FechaFinReserva - reserva.FechaInicioReserva).Days));
-        //     return sumaDuracion / Reservas.Count; // me va a dar el resultado del promedio de duracion de todas las reservas en dias del apartamento
-        // }
         
         public int EstPromedioDurEst()
         {
@@ -54,15 +47,18 @@ namespace RefugioDelSol
             int sumaDuracion = 0;
             foreach (var reserva in Reservas)
             {
-                int duracion = (reserva.FechaFinReserva - reserva.FechaInicioReserva).Days;
+                DateOnly fechaFin = reserva.FechaFinReserva;
+                DateOnly fechaInicio = reserva.FechaInicioReserva;
+                int duracion = (fechaFin.DayNumber - fechaInicio.DayNumber);
                 sumaDuracion += duracion;
             }
             return sumaDuracion / Reservas.Count;
         }
         public void DuracionReservaMenorA30()
         {
-            // calcula la duración en dias
-            int duracion = (FechaFinReserva - FechaInicioReserva).Days;
+            // calcula la duracion en dias
+            
+            int duracion = (FechaFinReserva.DayNumber - FechaInicioReserva.DayNumber);
             if(duracion > 30)
             {
                 Console.WriteLine("La reserva no puede exceder los 30 dias de estadia.");
@@ -72,16 +68,69 @@ namespace RefugioDelSol
                 Console.WriteLine($"La reserva tiene una duracion valida, {duracion} dias.");
             }
         }
-        public bool EsHabitacionDisponible()
+
+
+        public static Reserva PedirDatosReserva()
         {
-            foreach(var reserva in Reservas)
+            Console.Clear();
+            Console.WriteLine("Agregar Reserva");
+
+            Console.WriteLine("Agregar Fecha de Ingreso");
+            DateOnly fechaInicio = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
+            Console.WriteLine("Agregar Fecha de Salida");
+            DateOnly fechaFin = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
+
+            BuscarApartamentoDisponible(fechaInicio,fechaFin);
+            Console.WriteLine("Ingresar Numero de apartamento");
+            int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            
+            Console.WriteLine("Agregar Precio Base:");
+            int precioBase = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            Console.WriteLine("Agregar Cantidad de Valijas:");
+            int cantidadValija = int.Parse(Console.ReadLine() ?? string.Empty);
+            return new Reserva(fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija);
+        } 
+
+
+        public static bool BuscarApartamentoDisponible(DateOnly fechaInicio, DateOnly fechaFin)
+        {
+            ListaApartamentosDisponibles.Clear();
+
+            foreach (Reserva reserva in Reservas)
             {
-                if (reserva.FechaInicioReserva < FechaFinReserva && FechaInicioReserva < reserva.FechaFinReserva) // verifico si hay reserva en esas fechas
+                
+                if (fechaFin < reserva.FechaInicioReserva && fechaInicio < reserva.FechaInicioReserva|| reserva.FechaFinReserva < fechaInicio && reserva.FechaFinReserva < fechaFin)
                 {
-                    return false;
+                    ListaApartamentosDisponibles.Add(reserva.Apartamento);
                 }
             }
-            return true;
+
+            if (ListaApartamentosDisponibles.Count > 0)
+            {
+                Console.WriteLine("Apartamentos disponibles:");
+                foreach (var apartamento in ListaApartamentosDisponibles)
+                {
+                    Console.WriteLine($"Numero: {apartamento.NumApartamento}");
+                }
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("No hay apartamentos disponibles en las fechas seleccionadas.");
+                return false;
+            }
         }
+
+        public static void AgregarReserva()
+        {
+            Reserva nuevaReserva = PedirDatosReserva();
+            Reservas.Add(nuevaReserva);
+            
+        }
+
+
+
     }
-}
+}   
