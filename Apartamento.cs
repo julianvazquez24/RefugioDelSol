@@ -30,6 +30,8 @@ namespace RefugioDelSol
             this.SuperficieApartamento = superficieApartamento;
         }
 
+
+
         private static int NuevoNum()
         {
             Apartamento.UltimoNum += 1;

@@ -72,7 +72,6 @@ namespace RefugioDelSol
 
         public static Reserva PedirDatosReserva() 
         {
-            Console.Clear();
             Console.WriteLine("Agregar Reserva");
             int idReserva = NuevoId();
 
@@ -110,12 +109,14 @@ namespace RefugioDelSol
         {
             ListaApartamentosDisponibles.Clear();
 
-            foreach (Reserva reserva in Reservas)
+            ListaApartamentosDisponibles = Apartamento.Apartamentos.ToList();
+
+            foreach (Reserva reserva in Reserva.Reservas)
             {
                 
-                if (fechaFin < reserva.FechaInicioReserva && fechaInicio < reserva.FechaInicioReserva || reserva.FechaFinReserva < fechaInicio && reserva.FechaFinReserva < fechaFin)
+                if (!(fechaFin < reserva.FechaInicioReserva || fechaInicio > reserva.FechaFinReserva))
                 {
-                    ListaApartamentosDisponibles.Add(reserva.Apartamento);
+                    ListaApartamentosDisponibles.Remove(reserva.Apartamento);
                 }
             }
 
@@ -160,8 +161,5 @@ namespace RefugioDelSol
             Console.WriteLine("");
             }    
         }
-
-
-
     }
 }   
