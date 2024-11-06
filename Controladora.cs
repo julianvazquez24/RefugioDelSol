@@ -9,15 +9,47 @@ namespace RefugioDelSol
 {
     public class Controladora
     {
-        
+
         public List<Reserva> Reservas { get; set; }
-        public List<Huesped> Huespedes { get; set; }
-        public List<Apartamento> Apartamentos { get; set; }
+        public List<Huesped> Huespedes = new List<Huesped>();
+        public List<Apartamento> Apartamentos = new List<Apartamento>();
         public Controladora()
         {
             this.Reservas = new List<Reserva>();
             this.Huespedes = new List<Huesped>();
             this.Apartamentos = new List<Apartamento>();
+        }
+
+        public static void ListarHuespedesOrdenadosAlfabeticamente(List<Huesped> huespedes)
+        {
+            huespedes.Sort((a, b) => a.NombreHuesped.CompareTo(b.NombreHuesped));
+            Console.WriteLine("Lista de huéspedes ordenada alfabéticamente:");
+            Console.WriteLine("-------------------------------------------");
+
+            foreach (var huesped in huespedes)
+            {
+                Console.WriteLine(huesped);
+            }
+        }
+        
+        public static void MostrarApartamentosDisponibles(List<Apartamento> apartamentos)
+        {
+            var disponibles = apartamentos.Where(apartamento => apartamento.EstaDisponible).ToList(); 
+
+            if (disponibles.Count == 0)
+            {
+                Console.WriteLine("No hay apartamentos disponibles.");
+                return;
+            }
+
+            foreach (var apartamento in disponibles)
+            {
+                Console.WriteLine($"Apartamento {apartamento.NumApartamento}: Precio ${apartamento.PrecioApartamento}, " +
+                             $"Orientación: {apartamento.SurNorteApartamento}/{apartamento.EsteOesteMedio}, " +
+                             $"Dormitorios: {apartamento.CantidadDormitorios}, " +
+                             $"Superficie: {apartamento.SuperficieApartamento} m², " +
+                             $"Disponible: {apartamento.EstaDisponible}");
+            }
         }
 
         // public Reserva AgregarReserva(Reserva nuevaReserva)
@@ -65,22 +97,19 @@ namespace RefugioDelSol
             }
             return apartamentosMasReservados;
         }
+
+
+
+
         
-        public void ListaAlfabeticamenteHuespedes(List<Huesped> huespedes)
-        {
-            huespedes.Sort();
-            Console.WriteLine("Lista de huespedes ordenada Alfabeticamente");
-            Console.WriteLine("-------------------------------------------");
-            foreach (var huesped in huespedes)
-            {
-                Console.WriteLine("{0}", huesped);
-            }
-        }
+
+
+
 
         public List<Reserva> ListaReservaFecha(DateOnly fecha)
         {
             List<Reserva> reservasPorFecha = new List<Reserva>();
-            
+
             foreach (var reserva in Reservas)
             {
                 if (reserva.FechaFinReserva == fecha)
@@ -90,19 +119,10 @@ namespace RefugioDelSol
             }
             return reservasPorFecha;
         }
-        
-        //public List<Apartamento> ListaApartamentosDisponibles()
-        //{
-        //    List<Apartamento> apartamentosDisponibles = new List<Apartamento>();
 
-        //    foreach (var apartamento in Apartamentos)
-        //    {
-        //        if (apartamento.EsDisponible)
-        //        {
-        //            apartamentosDisponibles.Add(apartamento);
-        //        }
-        //    }
-        //    return apartamentosDisponibles;
-        }
-        
+    
+
+
+
     }
+}

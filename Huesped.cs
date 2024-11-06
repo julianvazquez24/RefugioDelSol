@@ -15,21 +15,53 @@ namespace RefugioDelSol
         public string NombreHuesped { get; set; }
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
+        public bool TieneMascota { get; set; }
         
+
+
         public static List<Huesped> Huespedes { get; set; } = new List<Huesped>(); 
 
-        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped)
+        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped,  bool tieneMascota)
         {
             this.IdHuesped = NuevoId();
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
+            this.TieneMascota = tieneMascota;
         }
 
         private static int NuevoId()
         {
             UltimoId += 1;
             return UltimoId;
+        }
+        public override string ToString()
+        {
+            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}, Mascota: {(TieneMascota ? "Si" : "No")}";
+        }
+        public void MostrarInformacionTienenAcceso()
+        {
+            Console.WriteLine("---------------------------------------------------------------");
+            Console.WriteLine($"{IdHuesped}, {NombreHuesped}, {ApellidoHuesped},{TieneMascota}");
+            Console.WriteLine("---------------------------------------------------------------");
+        }
+
+        public static void MostrarInformacionConvencionesYEsparcimiento()
+        {
+            
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+            Console.WriteLine("El centro de convenciones y esparcimiento es de acceso libre para todos los huéspedes.");
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+            Console.WriteLine();
+        }
+
+        public static void MostrarInformacionParque()
+        {
+            Console.WriteLine("---------------------------------------------------------------");
+            Console.WriteLine("El parque Este es de acceso libre y se pueden llevar mascotas.");
+            Console.WriteLine("El acceso al parque es por helicóptero o submarino.");
+             Console.WriteLine("--------------------------------------------------------------");
+            Console.WriteLine();
         }
 
         public static Huesped PedirDatosHuesped(){
@@ -44,8 +76,11 @@ namespace RefugioDelSol
 
             Console.WriteLine("Ingrese el telefono: ");
             int telefono = int.Parse(Console.ReadLine() ?? string.Empty);
-            
-            return new Huesped(nombre, apellido, telefono);
+
+            Console.WriteLine("¿Tiene mascotas?");
+            bool tieneMascota = bool.Parse(Console.ReadLine() ?? string.Empty);
+
+            return new Huesped(nombre, apellido, telefono, tieneMascota);
         }
 
         public static string PedirDatosString(string mensaje)
@@ -60,12 +95,19 @@ namespace RefugioDelSol
             int respuesta = int.Parse(Console.ReadLine() ?? string.Empty);
             return respuesta;
         }
+        //public static bool PedirDatosBool(bool mensaje)
+        //{
+        //    Console.WriteLine(mensaje);
+        //    bool respuesta = bool.Parse(Console.ReadLine() ?? string.Empty);
+        //    return respuesta;
+        //}
         
         public static void AgregarHuesped()
         {
             Huesped nuevoHuesped = PedirDatosHuesped();
             Huespedes.Add(nuevoHuesped);
             Console.WriteLine("Huesped Agregado correctamente");
+            nuevoHuesped.MostrarInformacionTienenAcceso();
         }
 
         public static Huesped BuscarHuespedPorId(int idHuesped)

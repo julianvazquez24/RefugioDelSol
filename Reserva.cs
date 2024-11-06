@@ -15,7 +15,7 @@ namespace RefugioDelSol
         public int IdReserva { get; set; }
         public DateOnly FechaInicioReserva { get; set; }
         public DateOnly FechaFinReserva { get; set; }
-        public int PrecioBase { get; set; }
+        public int PrecioBase { get; set; } 
         public int CantidadValijas { get; set; }
         public static List<Reserva> Reservas { get; set; } = new List<Reserva>();
 
@@ -38,6 +38,19 @@ namespace RefugioDelSol
             return Reserva.UltimoId;
         }
         
+        public void CantidadValijasPorPersona(int cantidadValijas)
+        {
+            
+            if (cantidadValijas > 5)
+            {
+                Console.WriteLine("No se permite tener mas de 5 valijas por personas");
+                this.CantidadValijas = 5;
+            }
+            else
+            {
+                this.CantidadValijas = cantidadValijas;
+            }
+        }
         public int EstPromedioDurEst()
         {
             if (Reservas.Count == 0)
@@ -95,14 +108,15 @@ namespace RefugioDelSol
             BuscarApartamentoDisponible(fechaInicio, fechaFin);
             Console.WriteLine("Ingresar Numero de apartamento");
             int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
-
-
-            Console.WriteLine("Agregar Precio Base:");
-            int precioBase = int.Parse(Console.ReadLine() ?? string.Empty);
-
+            
             Console.WriteLine("Agregar Cantidad de Valijas:");
             int cantidadValija = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            int precioBase = 250;
+            Console.WriteLine($"El precio base por noche es: {precioBase} USD");
+
             return new Reserva(idReserva,fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija);
+            
         } 
 
 
@@ -139,7 +153,6 @@ namespace RefugioDelSol
         {
             Reserva nuevaReserva = PedirDatosReserva();
             Reservas.Add(nuevaReserva);
-            
         }
 
         public static void ListarReservas()
