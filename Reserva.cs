@@ -17,6 +17,7 @@ namespace RefugioDelSol
         public DateOnly FechaFinReserva { get; set; }
         public int PrecioBase { get; set; } 
         public int CantidadValijas { get; set; }
+        public int IdHuesped { get; set; } 
         public static List<Reserva> Reservas { get; set; } = new List<Reserva>();
 
         public static List<Apartamento> ListaApartamentosDisponibles { get; set; } = new List<Apartamento>();
@@ -27,10 +28,15 @@ namespace RefugioDelSol
             this.IdReserva = NuevoId();
             this.FechaInicioReserva = fechaInicio;
             this.FechaFinReserva = fechaFin;
-            this.Apartamento.NumApartamento = numApartamento;
+            this.Apartamento = ListaApartamentosDisponibles.FirstOrDefault(a => a.NumApartamento == numApartamento);
+            if (this.Apartamento == null)
+            {
+                throw new Exception($"No se encontró un apartamento con el número {numApartamento} disponible.");
+            }
             this.PrecioBase = precioBase;
             this.CantidadValijas = cantidadValijas;
-            
+            this.IdHuesped = idHuesped;
+
         }
 
         private static int NuevoId()
@@ -60,7 +66,7 @@ namespace RefugioDelSol
                 return 0;
             }
             int sumaDuracion = 0;
-            foreach (var reserva in Reservas)
+            foreach (Reserva reserva in Reservas)
             {
                 DateOnly fechaFin = reserva.FechaFinReserva;
                 DateOnly fechaInicio = reserva.FechaInicioReserva;
@@ -69,19 +75,18 @@ namespace RefugioDelSol
             }
             return sumaDuracion / Reservas.Count;
         }
-        public void DuracionReservaMenorA30()
+        public static bool EsDuracionValida(DateOnly fechaInicio, DateOnly fechaFin)
         {
-            // calcula la duracion en dias
-            int duracion = (FechaFinReserva.DayNumber - FechaInicioReserva.DayNumber);
-            if(duracion > 30)
+            int duracion = (fechaFin.DayNumber - fechaInicio.DayNumber);
+            if (duracion > 30)
             {
-                Console.WriteLine("La reserva no puede exceder los 30 dias de estadia.");
+                Console.WriteLine("La reserva no puede exceder los 30 días de estadía.");
+                return false;
             }
-            else
-            {
-                Console.WriteLine($"La reserva tiene una duracion valida, {duracion} dias.");
-            }
+            Console.WriteLine($"La reserva tiene una duración válida de {duracion} días.");
+            return true;
         }
+
 
 
         public static Reserva PedirDatosReserva() 
@@ -99,10 +104,16 @@ namespace RefugioDelSol
                 Console.WriteLine("Agregue una fecha de Salida (yyyy-MM-dd):");
                 fechaFin = DateOnly.Parse(Console.ReadLine() ?? throw new Exception("Fecha inválida."));
             }
+
             // hace la excepcion 
             catch (Exception exception)
             {
                 Console.WriteLine($"Ha tenido el siguiente error: {exception.Message}");
+                return null;
+            }
+
+            if (!EsDuracionValida(fechaInicio, fechaFin))
+            {
                 return null;
             }
 
@@ -159,6 +170,7 @@ namespace RefugioDelSol
         {
             Reserva nuevaReserva = PedirDatosReserva();
             Reservas.Add(nuevaReserva);
+            nuevaReserva.Apartamento.VecesReservado += 1;
         }
 
         public static bool CancelarReserva(){
@@ -195,23 +207,146 @@ namespace RefugioDelSol
             return null;
         }
 
+        public  static DateOnly PedirFecha(string mensaje)
+        {
+            while (true)
+            {
+                Console.WriteLine(mensaje);
+                string input = Console.ReadLine() ?? string.Empty;
+
+                if (DateOnly.TryParse(input, out DateOnly fecha))
+                {
+                    return fecha;
+                }
+                else
+                {
+                    Console.WriteLine("Fecha inválida. Por favor, ingrese una fecha en el formato yyyy-MM-dd.");
+                }
+            }
+        }
+
+        public static bool ModificarReserva()
+        {
+           Console.WriteLine("Ingrese el ID de la reserva que deses modificar");
+           int idReserva = int.Parse (Console.ReadLine() ?? string.Empty);
+
+           Reserva? reserva = BuscarReservaPorId(idReserva);
+           if(reserva != null)
+           {
+                reserva.FechaInicioReserva = Reserva.PedirFecha("Ingrese una nueva Fecha de Inicio (yyyy-MM-dd): ");
+                reserva.FechaFinReserva = Reserva.PedirFecha("Ingrese una nueva Fecha de Fin (yyyy-MM-dd): ");
+                reserva.PrecioBase = Huesped.PedirDatosInt("Ingrese un nuevo Precio Base: ");
+                reserva.CantidadValijas = Huesped.PedirDatosInt("Ingrese la nueva cantidad de Valijas: ");
+                Console.WriteLine("Reserva modificada correctamente");
+                return true;
+           }
+           else
+           {
+            Console.WriteLine("Reserva no encontrada");
+            return false;
+           }
+        }
+
+        public static DateOnly PedirDatosFecha(string mensaje)
+        {
+            Console.WriteLine(mensaje);
+            DateOnly fecha;
+            while (!DateOnly.TryParse(Console.ReadLine(), out fecha))
+            {
+                Console.WriteLine("Fecha inválida. Intente nuevamente en formato yyyy-MM-dd:");
+            }
+            return fecha;
+        }
+
+        public static void ListarApartamentosDisponibles(DateOnly fechaInicioReserva, DateOnly fechaFinReserva)
+        {
+            List<Apartamento> apartamentosDisponibles = Apartamento.Apartamentos.ToList();
+
+            foreach (Reserva reserva in Reservas)
+            {
+                if (!(fechaFinReserva < reserva.FechaInicioReserva || fechaInicioReserva > reserva.FechaFinReserva))
+                {
+                    apartamentosDisponibles.Remove(reserva.Apartamento);
+                }
+            }
+
+            if (apartamentosDisponibles.Count > 0)
+            {
+                Console.WriteLine("Apartamentos disponibles en las fechas seleccionadas:");
+                foreach (var apartamento in apartamentosDisponibles)
+                {
+                    Console.WriteLine($"Numero de Apartamento: {apartamento.NumApartamento}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No hay apartamentos disponibles en las fechas seleccionadas.");
+            }
+        }
+
+        public static void ListarApartamentosConMasReservas()
+        {
+            Console.WriteLine("Apartamentos con más reservas:");
+
+            var apartamentosOrdenados = Apartamento.Apartamentos
+                .OrderByDescending(a => a.VecesReservado)
+                .ToList();
+
+            foreach (Apartamento apartamento in apartamentosOrdenados)
+            {
+                Console.WriteLine($"Número de Apartamento: {apartamento.NumApartamento}, Veces Reservado: {apartamento.VecesReservado}");
+            }
+        }
+
+        public static void MostrarReservasPorHuesped(int idHuesped)
+        {
+
+            List<Reserva> todasLasReservasHuesped = Reservas
+                .Where(reserva => reserva.IdHuesped == idHuesped)
+                .ToList();
+
+            if (todasLasReservasHuesped.Count > 0)
+            {
+                Console.WriteLine($"Reservas del huésped con ID {idHuesped}:");
+                foreach (Reserva reserva in todasLasReservasHuesped)
+                {
+                    Console.WriteLine("-----------------------------------------");
+                    Console.WriteLine($"Id Reserva: {reserva.IdReserva}");
+                    Console.WriteLine($"Fecha Inicio: {reserva.FechaInicioReserva}");
+                    Console.WriteLine($"Fecha Fin: {reserva.FechaFinReserva}");
+                    Console.WriteLine($"Número de Apartamento: {reserva.Apartamento?.NumApartamento ?? 0}");
+                    Console.WriteLine($"Precio Base: {reserva.PrecioBase} USD");
+                    Console.WriteLine($"Cantidad de Valijas: {reserva.CantidadValijas}");
+                    Console.WriteLine("-----------------------------------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No se encontraron reservas para el huésped con ID {idHuesped}.");
+            }
+        }
+
+
+
+
         public static void ListarReservas()
         {
-            Console.Clear();
-            Console.WriteLine("Lista de huespedes");
-            foreach (var reserva in Reservas)
+
+            Console.WriteLine("Lista de Reservas");
+            foreach (Reserva reserva in Reservas)
             {
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine($"Id Reserva: {reserva.IdReserva}");
-            Console.WriteLine($"Fecha Inicio: {reserva.FechaInicioReserva}");
-            Console.WriteLine($"Fecha Fin: {reserva.FechaFinReserva}");
-            Console.WriteLine($"Numero de Apartamento {reserva.Apartamento.NumApartamento}");
-            Console.WriteLine($"Precio Base US$: {reserva.PrecioBase}");
-            Console.WriteLine($"Cantidad de valijas: {reserva.CantidadValijas}");
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            }    
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine($"Id Reserva: {reserva.IdReserva}");
+                Console.WriteLine($"Fecha Inicio: {reserva.FechaInicioReserva}");
+                Console.WriteLine($"Fecha Fin: {reserva.FechaFinReserva}");
+                Console.WriteLine($"Numero de Apartamento {reserva.Apartamento.NumApartamento}");
+                Console.WriteLine($"Precio Base US$: {reserva.PrecioBase}");
+                Console.WriteLine($"Cantidad de valijas: {reserva.CantidadValijas}");
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine("");
+                Console.WriteLine("");
+            }
         }
+
     }
 }   

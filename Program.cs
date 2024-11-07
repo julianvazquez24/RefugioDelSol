@@ -1,14 +1,14 @@
 ﻿using RefugioDelSol;
 using System.ComponentModel.Design;
 
-List<Huesped> huespedes = new List<Huesped>
-{
 
-    new Huesped("Juan", "Alvez", 98321456),
-    new Huesped("Pedro", "Perez", 94444444),
-    new Huesped("Ana", "Martinez", 98218238)
-            
-};
+
+Huesped.Huespedes.Add(
+    new Huesped("Juan", "Alvez", 98321456));
+Huesped.Huespedes.Add(
+    new Huesped("Pedro", "Perez", 94444444));
+Huesped.Huespedes.Add(
+    new Huesped("Ana", "Martinez", 98218238));
 
 
 
@@ -43,7 +43,6 @@ while (input != "fin")
         {
             case 1:
                 Huesped.AgregarHuesped();
-                
                 break;
 
             case 2:
@@ -85,8 +84,7 @@ while (input != "fin")
                 
             case 2:
                 Console.WriteLine("Eliminar Apartamento:");
-                Console.Write("Ingrese el ID del apartamento que desea eliminar: ");
-                int idEliminar = int.Parse(Console.ReadLine() ?? string.Empty); 
+                Apartamento.EliminarApartamento();
                 break;
 
             case 3:
@@ -110,7 +108,7 @@ while (input != "fin")
         
         Console.WriteLine("Por favor selecciona una opcion");
         Console.WriteLine("(1) Agregar Reserva");
-        Console.WriteLine("(2) Eliminar Reserva");
+        Console.WriteLine("(2) Cancelar Reserva");
         Console.WriteLine("(3) Modificar Reserva");
         Console.WriteLine("(4) Listar Reservas");
 
@@ -119,21 +117,20 @@ while (input != "fin")
         switch (opcionReserva)
         {
             case 1:
-                Console.WriteLine("Agregar reserva");
                 Reserva.AgregarReserva();
                 break;
 
             case 2:
-                Console.WriteLine("Eliminar reserva");
+                Console.WriteLine("Cancelar reserva");
                 Reserva.CancelarReserva();
                 break;
 
             case 3:
-                Console.WriteLine("Modificar reserva");
+                Reserva.ModificarReserva();
                 break;
 
             case 4:
-                Console.WriteLine("Lista de las reservas");
+                Reserva.ListarReservas();
                 break;
 
             default:
@@ -159,12 +156,14 @@ while (input != "fin")
         switch (opcionEstadistica)
         {
             case 1:
-                Console.WriteLine("Ingrese la fecha de inicio en la cual quiere ver los apartamentos disponibles");
-                int fechaInicioReserva = int.Parse(Console.ReadLine() ??  string.Empty);
-                Console.WriteLine("Ingrese la fecha de fin en la cual quiere ver los apartamentos disponibles");
-                int fechaFinReserva = int.Parse(Console.ReadLine() ?? string.Empty);
-                Console.WriteLine("Lista de los apartamentos disponibles");
-                //ListarApartamentosDisponibles(fechaFinReserva, fechaInicioReserva);
+
+                Console.WriteLine("Ingrese la fecha de inicio en la cual quiere ver los apartamentos disponibles (yyyy-MM-dd):");
+                DateOnly fechaInicioReserva = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
+
+                Console.WriteLine("Ingrese la fecha de fin en la cual quiere ver los apartamentos disponibles (yyyy-MM-dd):");
+                DateOnly fechaFinReserva = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
+
+                Reserva.ListarApartamentosDisponibles(fechaFinReserva, fechaInicioReserva);
 
                 // hay que hacer una funcion en la clase reserva que se llame listarApartamentosDisponibles(), esta tiene que crear una lista con todos los apartamentos que hay, fijarse si en las reservas hay fechas que coinciden, quitarlos de esa lista, y luego listar cada uno de los que quedo
 
@@ -172,30 +171,38 @@ while (input != "fin")
 
             case 2:
                 Console.WriteLine("Apartamentos con mas reservas");
+                Reserva.ListarApartamentosConMasReservas();
                 // tendriamos que hacer una propiedad de el apartamento o de la reserva que se llame vecesReservado, y que cuando se agrega una reserva se le haga +1 a esa propiedad, luego usar el listar todos los apartamentos y solo mostrar el id y las veces de reserva en vez de todo
                 break;
 
             case 3:
                 Console.WriteLine("Lista reservas por Fecha");
-                Console.WriteLine("Ingresar fecha");
-                int fecha = int.Parse(Console.ReadLine() ?? string.Empty);
-                // va a tener que buscar en las reservas las que tengan como fecha de inicio a ingresada aca, y mostrar cada una de las reservas incluyendo id, fechainicio y fecha fin, o directamente toda la informacion
+                Console.WriteLine("Ingresar fecha (yyyy-MM-dd):");
 
+                if (DateOnly.TryParse(Console.ReadLine(), out DateOnly fechaIngresada))
+                {
+                    Controladora.MostrarReservasPorFecha(fechaIngresada);
+                }
+                else
+                {
+                    Console.WriteLine("Fecha inválida. Por favor ingrese la fecha en el formato yyyy-MM-dd.");
+                }
+
+                // va a tener que buscar en las reservas las que tengan como fecha de inicio a ingresada aca, y mostrar cada una de las reservas incluyendo id, fechainicio y fecha fin, o directamente toda la informacion
                 break;
 
             case 4:
-                Console.WriteLine("Reservas del huesped");
-                Console.WriteLine("Ingresar ID del huesped");
+                Console.WriteLine("Reservas del huésped");
+                Console.WriteLine("Ingresar ID del huésped:");
                 int idHuesped = int.Parse(Console.ReadLine() ?? string.Empty);
-                // hay que hacer una funcion que busque al huesped x id y se fije en las reservas que ha hecho, para eso vamos a necesitar guardar el id del huesped cuando se crea una reserva, y en la funcion crear una lista de todasLasReservasHuesped, que agregue las reservas del huesped, para luego listarlas
-
+                Reserva.MostrarReservasPorHuesped(idHuesped);
                 break;
             
             case 5:
-                Console.WriteLine("Reservas del Dia");
+                Console.WriteLine("Reservas del Día");
                 DateOnly fechaHoy = DateOnly.FromDateTime(DateTime.Now);
-                int fechaInt = int.Parse(fechaHoy.ToString("yyyyMMdd"));
-                // va a tener que usar la misma funcion que la de buscar por fecha
+                Controladora.MostrarReservasPorFecha(fechaHoy);
+
                 break;
 
             case 6:

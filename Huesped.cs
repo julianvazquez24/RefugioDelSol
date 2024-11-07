@@ -139,7 +139,6 @@ namespace RefugioDelSol
             Huesped? huesped = BuscarHuespedPorId(idHuesped);
             if(huesped != null)
             {
-
                 huesped.NombreHuesped = PedirDatosString("Ingrese un nuevo Nombre: ");
                 huesped.ApellidoHuesped = PedirDatosString("Ingrese un nuevo Apellido: ");
                 huesped.TelefonoHuesped = PedirDatosInt("Ingrese un nuevo Telefono: ");
@@ -165,8 +164,7 @@ namespace RefugioDelSol
                 Console.WriteLine($"Apellido: {huesped.ApellidoHuesped}");
                 Console.WriteLine($"Telefono: {huesped.TelefonoHuesped}");
                 Console.WriteLine("-----------------------------------------");
-                Console.WriteLine("");
-                Console.WriteLine("");
+
             }
         }
         

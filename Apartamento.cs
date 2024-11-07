@@ -17,6 +17,8 @@ namespace RefugioDelSol
         public string EsteOesteMedio { get; set; }
         public int CantidadDormitorios { get; set; }
         public int SuperficieApartamento { get; set; }
+
+        public int VecesReservado { get; set; } = 0;
         
         public static List<Apartamento> Apartamentos = new List<Apartamento>();
 
@@ -31,9 +33,7 @@ namespace RefugioDelSol
             this.SuperficieApartamento = superficieApartamento;
 
         }
-
-
-
+        
         private static int NuevoNum()
         {
             Apartamento.UltimoNum += 1;
@@ -164,9 +164,9 @@ namespace RefugioDelSol
             return null;
         }
 
-        public bool EliminarApartamento(int numApartamento)
+        public static bool EliminarApartamento()
         {
-            Console.Write("Escriba el numero del apartamento que desea eliminar");
+            Console.Write("Escriba el numero del Apartamento que desea Eliminar: ");
             int numApartamentoInt = int.Parse(Console.ReadLine() ?? string.Empty);
 
             Apartamento? apartamento = BuscarApartamentoPorNum(numApartamentoInt);
@@ -180,7 +180,7 @@ namespace RefugioDelSol
 
         public static bool ModificarApartamento()
         {
-            Console.WriteLine("Escriba el numero del apartamento que desea modificar");
+            Console.WriteLine("Escriba el numero del Apartamento que desea Modificar");
             int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
             Apartamento? apartamento = BuscarApartamentoPorNum(numApartamento);

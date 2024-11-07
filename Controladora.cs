@@ -20,103 +20,49 @@ namespace RefugioDelSol
             this.Apartamentos = new List<Apartamento>();
         }
 
+
+
+
         public static void ListarHuespedesOrdenadosAlfabeticamente(List<Huesped> huespedes)
         {
             huespedes.Sort((a, b) => a.NombreHuesped.CompareTo(b.NombreHuesped));
             Console.WriteLine("Lista de huéspedes ordenada alfabéticamente:");
             Console.WriteLine("-------------------------------------------");
 
-            foreach (var huesped in huespedes)
+            foreach (Huesped huesped in huespedes)
             {
                 Console.WriteLine(huesped);
             }
         }
-        
-        //public static void MostrarApartamentosDisponibles(List<Apartamento> apartamentos)
-        //{
-        //    var disponibles = apartamentos.Where(apartamento => apartamento.EstaDisponible).ToList(); 
 
-        //    if (disponibles.Count == 0)
-        //    {
-        //        Console.WriteLine("No hay apartamentos disponibles.");
-        //        return;
-        //    }
-
-        //    foreach (var apartamento in disponibles)
-        //    {
-        //        Console.WriteLine($"Apartamento {apartamento.NumApartamento}: Precio ${apartamento.PrecioApartamento}, " +
-        //                     $"Orientación: {apartamento.SurNorteApartamento}/{apartamento.EsteOesteMedio}, " +
-        //                     $"Dormitorios: {apartamento.CantidadDormitorios}, " +
-        //                     $"Superficie: {apartamento.SuperficieApartamento} m², " +
-        //                     $"Disponible: {apartamento.EstaDisponible}");
-        //    }
-        //}
-
-        public List<Reserva> ListaReservaPorFecha(DateOnly fecha) 
+        public static void MostrarReservasPorFecha(DateOnly fechaIngresada)
         {
-            List<Reserva> reservasPorFecha = new List<Reserva>();
 
-            foreach (var reserva in Reserva.Reservas)
+            List<Reserva> reservasEnFecha = Reserva.Reservas
+                .Where(reserva => reserva.FechaInicioReserva == fechaIngresada)
+                .ToList();
+
+            if (reservasEnFecha.Count > 0)
             {
-                if (fecha >= reserva.FechaInicioReserva && fecha <= reserva.FechaFinReserva)
+                Console.WriteLine($"Reservas con fecha de inicio {fechaIngresada}:");
+                foreach (var reserva in reservasEnFecha)
                 {
-                    reservasPorFecha.Add(reserva);
-                }
-            }
-            return reservasPorFecha;
-        }
-
-
-        public static void MostrarReservasPorHuesped(int idHuesped){
-            List<Reserva> reservasDelHuesped = new List<Reserva>();
-
-            foreach(var reserva in Reserva.Reservas)
-            {
-                if(reserva.Huesped.IdHuesped == idHuesped)
-                {
-                    reservasDelHuesped.Add(reserva);
-                }
-            }
-
-            if(reservasDelHuesped.Count > 0)
-            {
-                Console.WriteLine($"Reservas del huesped");
-                foreach(var reserva in reservasDelHuesped)
-                {
-                    Console.WriteLine($"Fecha Incio de la reserva: {reserva.FechaInicioReserva} - Fecha Fin de la reserva: {reserva.FechaFinReserva}");
+                    Console.WriteLine("-----------------------------------------");
+                    Console.WriteLine($"Id Reserva: {reserva.IdReserva}");
+                    Console.WriteLine($"Fecha Inicio: {reserva.FechaInicioReserva}");
+                    Console.WriteLine($"Fecha Fin: {reserva.FechaFinReserva}");
+                    Console.WriteLine($"Número de Apartamento: {reserva.Apartamento?.NumApartamento ?? 0}");
+                    Console.WriteLine($"Precio Base: {reserva.PrecioBase} USD");
+                    Console.WriteLine($"Cantidad de Valijas: {reserva.CantidadValijas}");
+                    Console.WriteLine("-----------------------------------------");
                 }
             }
             else
             {
-                Console.WriteLine($"No se encuentran reservas por el Id {idHuesped}");
+                Console.WriteLine($"No se encontraron reservas para la fecha {fechaIngresada}.");
             }
         }
 
-        public List<Apartamento> ListaApartamentosMasReservados()
-        {
-            List<Apartamento> apartamentosMasReservados = new List<Apartamento>();
-            foreach (var reserva in Reservas)
-            {
-                apartamentosMasReservados.Add(reserva.Apartamento);
-            }
-            return apartamentosMasReservados;
-        }
-
-       
-
-       
-
-
-
-
-        
-
-
-
-
-        
-
-    
 
 
 
