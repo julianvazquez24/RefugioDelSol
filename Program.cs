@@ -224,6 +224,7 @@ while (input != "fin")
 
             default:
                 Console.WriteLine("Opcion no valida");
+                Console.WriteLine("Le erraste feo");
                 break;
         }
     }
