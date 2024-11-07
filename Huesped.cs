@@ -15,19 +15,15 @@ namespace RefugioDelSol
         public string NombreHuesped { get; set; }
         public string ApellidoHuesped { get; set; }
         public int TelefonoHuesped { get; set; }
-        public bool TieneMascota { get; set; }
-        
-
-
+    
         public static List<Huesped> Huespedes { get; set; } = new List<Huesped>(); 
 
-        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped,  bool tieneMascota)
+        public Huesped(string nombreHuesped, string apellidoHuesped, int telefonoHuesped)
         {
             this.IdHuesped = NuevoId();
             this.NombreHuesped = nombreHuesped;
             this.ApellidoHuesped = apellidoHuesped;
             this.TelefonoHuesped = telefonoHuesped;
-            this.TieneMascota = tieneMascota;
         }
 
         private static int NuevoId()
@@ -35,14 +31,11 @@ namespace RefugioDelSol
             UltimoId += 1;
             return UltimoId;
         }
-        public override string ToString()
-        {
-            return $"{NombreHuesped} {ApellidoHuesped}, Tel: {TelefonoHuesped}, Mascota: {(TieneMascota ? "Si" : "No")}";
-        }
-        public void MostrarInformacionTienenAcceso()
+
+        public void MostrarInformacionHuesped()
         {
             Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine($"{IdHuesped}, {NombreHuesped}, {ApellidoHuesped},{TieneMascota}");
+            Console.WriteLine($"{IdHuesped}, {NombreHuesped}, {ApellidoHuesped}");
             Console.WriteLine("---------------------------------------------------------------");
         }
 
@@ -65,7 +58,7 @@ namespace RefugioDelSol
         }
 
         public static Huesped PedirDatosHuesped(){
-            Console.Clear();
+
             Console.WriteLine("Agregar huesped");
 
             Console.Write("Ingrese el nombre: ");
@@ -77,10 +70,8 @@ namespace RefugioDelSol
             Console.WriteLine("Ingrese el telefono: ");
             int telefono = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            Console.WriteLine("¿Tiene mascotas?");
-            bool tieneMascota = bool.Parse(Console.ReadLine() ?? string.Empty);
 
-            return new Huesped(nombre, apellido, telefono, tieneMascota);
+            return new Huesped(nombre, apellido, telefono);
         }
 
         public static string PedirDatosString(string mensaje)
@@ -95,19 +86,14 @@ namespace RefugioDelSol
             int respuesta = int.Parse(Console.ReadLine() ?? string.Empty);
             return respuesta;
         }
-        //public static bool PedirDatosBool(bool mensaje)
-        //{
-        //    Console.WriteLine(mensaje);
-        //    bool respuesta = bool.Parse(Console.ReadLine() ?? string.Empty);
-        //    return respuesta;
-        //}
+ 
         
         public static void AgregarHuesped()
         {
             Huesped nuevoHuesped = PedirDatosHuesped();
             Huespedes.Add(nuevoHuesped);
             Console.WriteLine("Huesped Agregado correctamente");
-            nuevoHuesped.MostrarInformacionTienenAcceso();
+            nuevoHuesped.MostrarInformacionHuesped();
         }
 
         public static Huesped BuscarHuespedPorId(int idHuesped)
@@ -169,11 +155,12 @@ namespace RefugioDelSol
 
         public static void ListarHuespedes()
         {
-            Console.Clear();
+
             Console.WriteLine("Lista de huespedes");
             foreach( var huesped in Huespedes)
             {
                 Console.WriteLine("-----------------------------------------");
+                Console.WriteLine($"Id de Huesped : {huesped.IdHuesped}");
                 Console.WriteLine($"Nombre: {huesped.NombreHuesped}");
                 Console.WriteLine($"Apellido: {huesped.ApellidoHuesped}");
                 Console.WriteLine($"Telefono: {huesped.TelefonoHuesped}");

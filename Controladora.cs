@@ -32,60 +32,64 @@ namespace RefugioDelSol
             }
         }
         
-        public static void MostrarApartamentosDisponibles(List<Apartamento> apartamentos)
+        //public static void MostrarApartamentosDisponibles(List<Apartamento> apartamentos)
+        //{
+        //    var disponibles = apartamentos.Where(apartamento => apartamento.EstaDisponible).ToList(); 
+
+        //    if (disponibles.Count == 0)
+        //    {
+        //        Console.WriteLine("No hay apartamentos disponibles.");
+        //        return;
+        //    }
+
+        //    foreach (var apartamento in disponibles)
+        //    {
+        //        Console.WriteLine($"Apartamento {apartamento.NumApartamento}: Precio ${apartamento.PrecioApartamento}, " +
+        //                     $"Orientación: {apartamento.SurNorteApartamento}/{apartamento.EsteOesteMedio}, " +
+        //                     $"Dormitorios: {apartamento.CantidadDormitorios}, " +
+        //                     $"Superficie: {apartamento.SuperficieApartamento} m², " +
+        //                     $"Disponible: {apartamento.EstaDisponible}");
+        //    }
+        //}
+
+        public List<Reserva> ListaReservaPorFecha(DateOnly fecha) 
         {
-            var disponibles = apartamentos.Where(apartamento => apartamento.EstaDisponible).ToList(); 
+            List<Reserva> reservasPorFecha = new List<Reserva>();
 
-            if (disponibles.Count == 0)
+            foreach (var reserva in Reserva.Reservas)
             {
-                Console.WriteLine("No hay apartamentos disponibles.");
-                return;
-            }
-
-            foreach (var apartamento in disponibles)
-            {
-                Console.WriteLine($"Apartamento {apartamento.NumApartamento}: Precio ${apartamento.PrecioApartamento}, " +
-                             $"Orientación: {apartamento.SurNorteApartamento}/{apartamento.EsteOesteMedio}, " +
-                             $"Dormitorios: {apartamento.CantidadDormitorios}, " +
-                             $"Superficie: {apartamento.SuperficieApartamento} m², " +
-                             $"Disponible: {apartamento.EstaDisponible}");
-            }
-        }
-
-        // public Reserva AgregarReserva(Reserva nuevaReserva)
-        // {
-        //     this.Reservas.Add(nuevaReserva);
-        //     return nuevaReserva;
-        // }
-
-        // public void CancelarReserva()
-        // {
-        //     Console.WriteLine("Ingrese el ID de la reserva que quieres cancelar: ");
-        //     int idReserva = int.Parse(Console.ReadLine() ?? string.Empty);
-
-        //     for (int i = 0; i < this.Reservas.Count; i++)
-        //     {
-        //         if (this.Reservas[i].IdReserva == idReserva)
-        //         {
-        //             this.Reservas.RemoveAt(i);
-        //             Console.WriteLine("La reserva fue cancelada con exito");
-        //             break;
-        //         }
-        //     }
-        //     Console.WriteLine("La reserva no fue encontrada");
-        // }
-
-        public List<Reserva> ListarReservasPorHuesped(Huesped huesped)
-        {
-            List<Reserva> reservaPorHuesped = new List<Reserva>();
-            foreach (var reserva in Reservas)
-            {
-                if (reserva.Huesped.IdHuesped == huesped.IdHuesped)
+                if (fecha >= reserva.FechaInicioReserva && fecha <= reserva.FechaFinReserva)
                 {
-                    reservaPorHuesped.Add(reserva);
+                    reservasPorFecha.Add(reserva);
                 }
             }
-            return reservaPorHuesped;
+            return reservasPorFecha;
+        }
+
+
+        public static void MostrarReservasPorHuesped(int idHuesped){
+            List<Reserva> reservasDelHuesped = new List<Reserva>();
+
+            foreach(var reserva in Reserva.Reservas)
+            {
+                if(reserva.Huesped.IdHuesped == idHuesped)
+                {
+                    reservasDelHuesped.Add(reserva);
+                }
+            }
+
+            if(reservasDelHuesped.Count > 0)
+            {
+                Console.WriteLine($"Reservas del huesped");
+                foreach(var reserva in reservasDelHuesped)
+                {
+                    Console.WriteLine($"Fecha Incio de la reserva: {reserva.FechaInicioReserva} - Fecha Fin de la reserva: {reserva.FechaFinReserva}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No se encuentran reservas por el Id {idHuesped}");
+            }
         }
 
         public List<Apartamento> ListaApartamentosMasReservados()
@@ -98,6 +102,10 @@ namespace RefugioDelSol
             return apartamentosMasReservados;
         }
 
+       
+
+       
+
 
 
 
@@ -106,19 +114,7 @@ namespace RefugioDelSol
 
 
 
-        public List<Reserva> ListaReservaFecha(DateOnly fecha)
-        {
-            List<Reserva> reservasPorFecha = new List<Reserva>();
-
-            foreach (var reserva in Reservas)
-            {
-                if (reserva.FechaFinReserva == fecha)
-                {
-                    reservasPorFecha.Add(reserva);
-                }
-            }
-            return reservasPorFecha;
-        }
+        
 
     
 

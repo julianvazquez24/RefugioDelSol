@@ -22,7 +22,7 @@ namespace RefugioDelSol
         public static List<Apartamento> ListaApartamentosDisponibles { get; set; } = new List<Apartamento>();
         public Huesped Huesped { get; set; }
         public Apartamento Apartamento { get; set; }
-        public Reserva(int idReserva, DateOnly fechaInicio, DateOnly fechaFin,int numApartamento, int precioBase, int cantidadValijas)
+        public Reserva(int idReserva, DateOnly fechaInicio, DateOnly fechaFin,int numApartamento, int precioBase, int cantidadValijas, int idHuesped)
         {
             this.IdReserva = NuevoId();
             this.FechaInicioReserva = fechaInicio;
@@ -30,6 +30,7 @@ namespace RefugioDelSol
             this.Apartamento.NumApartamento = numApartamento;
             this.PrecioBase = precioBase;
             this.CantidadValijas = cantidadValijas;
+            
         }
 
         private static int NuevoId()
@@ -51,6 +52,7 @@ namespace RefugioDelSol
                 this.CantidadValijas = cantidadValijas;
             }
         }
+        
         public int EstPromedioDurEst()
         {
             if (Reservas.Count == 0)
@@ -70,7 +72,6 @@ namespace RefugioDelSol
         public void DuracionReservaMenorA30()
         {
             // calcula la duracion en dias
-            
             int duracion = (FechaFinReserva.DayNumber - FechaInicioReserva.DayNumber);
             if(duracion > 30)
             {
@@ -98,6 +99,7 @@ namespace RefugioDelSol
                 Console.WriteLine("Agregue una fecha de Salida (yyyy-MM-dd):");
                 fechaFin = DateOnly.Parse(Console.ReadLine() ?? throw new Exception("Fecha inválida."));
             }
+            // hace la excepcion 
             catch (Exception exception)
             {
                 Console.WriteLine($"Ha tenido el siguiente error: {exception.Message}");
@@ -114,7 +116,10 @@ namespace RefugioDelSol
             int precioBase = 250;
             Console.WriteLine($"El precio base por noche es: {precioBase} USD");
 
-            return new Reserva(idReserva,fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija);
+            Console.WriteLine("Ingresar Id del huesped que hara la reserva");
+            int idHuesped = int.Parse(Console.ReadLine() ?? string.Empty);
+
+            return new Reserva(idReserva,fechaInicio,fechaFin,numApartamento,precioBase,cantidadValija, idHuesped);
             
         } 
 
@@ -154,6 +159,40 @@ namespace RefugioDelSol
         {
             Reserva nuevaReserva = PedirDatosReserva();
             Reservas.Add(nuevaReserva);
+        }
+
+        public static bool CancelarReserva(){
+            Console.WriteLine("Ingrese el ID de la reserva que deseas cancelar: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int idReserva))
+            {
+                Console.WriteLine("ID invalido, intentalo denuevo");
+                return false;
+            }
+            Reserva? reserva = BuscarReservaPorId(idReserva);
+            if(reserva != null)
+            {
+                Reservas.Remove(reserva);
+                Console.WriteLine($"Reserva con ID {idReserva} eliminado correctamente");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"No se encontro la Reserva con ID {idReserva}");
+                return false;
+            }
+        }
+
+        public static Reserva? BuscarReservaPorId(int idReserva)
+        {
+            foreach(Reserva reserva in Reservas)
+            {
+                if(reserva.IdReserva == idReserva)
+                {
+                    return reserva;
+                }
+            }
+            return null;
         }
 
         public static void ListarReservas()

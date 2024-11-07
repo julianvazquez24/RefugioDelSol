@@ -17,22 +17,19 @@ namespace RefugioDelSol
         public string EsteOesteMedio { get; set; }
         public int CantidadDormitorios { get; set; }
         public int SuperficieApartamento { get; set; }
-        public bool AccesoPiscina { get; set;}
-        public bool EstaDisponible { get; set; }
         
         public static List<Apartamento> Apartamentos = new List<Apartamento>();
 
 
-        public Apartamento(int numApartamento, double precioApartamento, string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento, bool estaDisponible, bool accesoPiscina)
+        public Apartamento( double precioApartamento, string surNorteApartamento, string esteOesteMedio, int cantidadDormitorios, int superficieApartamento)
         {
-            this.NumApartamento = numApartamento;
+            this.NumApartamento = NuevoNum();
             this.PrecioApartamento = precioApartamento;
             this.SurNorteApartamento= surNorteApartamento;
             this.EsteOesteMedio = esteOesteMedio;   
             this.CantidadDormitorios = cantidadDormitorios;
             this.SuperficieApartamento = superficieApartamento;
-            this.AccesoPiscina = accesoPiscina;
-            this.EstaDisponible = estaDisponible;
+
         }
 
 
@@ -44,28 +41,42 @@ namespace RefugioDelSol
         }
         public static void LosApartamentos()
         {
-            int numApartamento = 1; 
+  
 
-            // los apartamentos al norte
+            // apartamentos norte/medio 
             for (int i = 0; i < 5; i++)
             {
-                Apartamentos.Add(new Apartamento(numApartamento++, 250, "Norte", "Oeste", 4, 240, true, true));
+                Apartamentos.Add(new Apartamento( 250, "Norte", "Medio", 4, 240));
             }
 
-            for (int i = 0; i < 10; i++)
-            {
-                Apartamentos.Add(new Apartamento(numApartamento++, 250, "Norte", "Oeste", 3, 180, true, false));
-            }
-
-            // los apartamentos al sur
+            //apartamentos sur/medio
             for (int i = 0; i < 5; i++)
             {
-                Apartamentos.Add(new Apartamento(numApartamento++, 250, "Sur", "Oeste", 4, 240, true, true));
+                Apartamentos.Add(new Apartamento( 250, "Sur", "Medio", 3, 180));
             }
 
-            for (int i = 0; i < 10; i++)
+            // apartamentos norte/este
+            for (int i = 0; i < 5; i++)
             {
-                Apartamentos.Add(new Apartamento(numApartamento++, 250, "Sur", "Oeste", 3, 180, true, false));
+               Apartamentos.Add(new Apartamento( 250, "Norte", "Este", 4, 240));
+            }
+
+            // apartamentos sur/este
+            for (int i = 0; i < 5; i++)
+            {
+                Apartamentos.Add(new Apartamento( 250, "Sur", "Este", 4, 240));
+            }
+
+            // apartamentos norte/oeste
+            for (int i = 0; i < 5; i++)
+            {
+                Apartamentos.Add(new Apartamento( 250, "Norte", "Oeste", 3, 180));
+            }
+
+            // apartamentos sur/oeste
+            for (int i = 0; i < 5; i++)
+            {
+                Apartamentos.Add(new Apartamento( 250, "Sur", "Oeste", 4, 240));
             }
 
         }
@@ -84,11 +95,10 @@ namespace RefugioDelSol
             foreach (var apartamento in Apartamentos)
             {
                 double precioFinal = apartamento.PrecioApartamento;
-                if (apartamento.EsteOesteMedio == "Oeste" && apartamento.AccesoPiscina)
+                if (apartamento.EsteOesteMedio == "Oeste")
                 {
                     precioFinal *= 1.2; 
                 }
-                string accesoPiscina = apartamento.AccesoPiscina ? " (Acceso a la piscina)" : "";
                 
                 Console.WriteLine("-----------------------------------------");
                 Console.WriteLine($"Número: {apartamento.NumApartamento}");
@@ -96,7 +106,7 @@ namespace RefugioDelSol
                 Console.WriteLine($"Orientación N/S: {apartamento.SurNorteApartamento}");
                 Console.WriteLine($"Orientación E/O/M: {apartamento.EsteOesteMedio}");
                 Console.WriteLine($"Cantidad dormitorios: {apartamento.CantidadDormitorios}");
-                Console.WriteLine($"Superficie: {apartamento.SuperficieApartamento} m2 {accesoPiscina}");
+                Console.WriteLine($"Superficie: {apartamento.SuperficieApartamento} m2");
                 Console.WriteLine("-----------------------------------------");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -109,9 +119,6 @@ namespace RefugioDelSol
             Console.Clear();
             Console.WriteLine("Agregar Apartamento:");
 
-            Console.WriteLine("Ingrese el numero del apartamento: ");
-            int numApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
-
             Console.WriteLine("Ingrese el precio del apartamento: ");
             int precioApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
@@ -123,17 +130,19 @@ namespace RefugioDelSol
 
             Console.WriteLine("Ingrese la cantidad de dormitorios: ");
             int cantidadDormitorios = int.Parse(Console.ReadLine() ?? string.Empty);
+            int superficieApartamento = 0;
+            if (cantidadDormitorios == 4)
+            {
+                superficieApartamento = 240;
+            }
+            else
+            {
+                superficieApartamento = 180;
+            }
 
-            Console.WriteLine("Ingrese la superficie en m2: ");
-            int superficieApartamento = int.Parse(Console.ReadLine() ?? string.Empty);
 
-            Console.WriteLine("¿El apartamento esta disponible?: (true/false) ");
-            bool estaDisponible = bool.Parse(Console.ReadLine() ?? string.Empty);
 
-            Console.WriteLine("¿Tiene acceso a la piscina? (true/false):");
-            bool accesoPiscina = bool.Parse(Console.ReadLine() ?? "false");
-
-            return new Apartamento(numApartamento, precioApartamento, surNorteApartamento, esteOesteMedio, cantidadDormitorios, superficieApartamento, estaDisponible, accesoPiscina);
+            return new Apartamento( precioApartamento, surNorteApartamento, esteOesteMedio, cantidadDormitorios, superficieApartamento);
         }
 
         public static void AgregarApartamento()
