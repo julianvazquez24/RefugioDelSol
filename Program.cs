@@ -148,8 +148,9 @@ while (input != "fin")
         Console.WriteLine("(4) Reservas del huesped");
         Console.WriteLine("(5) Reservas del día");
         Console.WriteLine("(6) Lista de huespedes ordenada alfabeticamente");
-        Console.WriteLine("(7) Informacion sobre el centro de convenciones");
-        Console.WriteLine("(8) Informacion del parque");
+        Console.WriteLine("(7) Duración de Estadía Promedio");
+        Console.WriteLine("(8) Informacion sobre el centro de convenciones");
+        Console.WriteLine("(9) Informacion del parque");
 
         int opcionEstadistica = int.Parse(Console.ReadLine() ?? string.Empty);
 
@@ -163,7 +164,7 @@ while (input != "fin")
                 Console.WriteLine("Ingrese la fecha de fin en la cual quiere ver los apartamentos disponibles (yyyy-MM-dd):");
                 DateOnly fechaFinReserva = DateOnly.Parse(Console.ReadLine() ?? string.Empty);
 
-                Reserva.ListarApartamentosDisponibles(fechaFinReserva, fechaInicioReserva);
+                Controladora.ListarApartamentosDisponibles(fechaFinReserva, fechaInicioReserva);
 
                 // hay que hacer una funcion en la clase reserva que se llame listarApartamentosDisponibles(), esta tiene que crear una lista con todos los apartamentos que hay, fijarse si en las reservas hay fechas que coinciden, quitarlos de esa lista, y luego listar cada uno de los que quedo
 
@@ -171,7 +172,7 @@ while (input != "fin")
 
             case 2:
                 Console.WriteLine("Apartamentos con mas reservas");
-                Reserva.ListarApartamentosConMasReservas();
+                Controladora.ListarApartamentosConMasReservas();
                 // tendriamos que hacer una propiedad de el apartamento o de la reserva que se llame vecesReservado, y que cuando se agrega una reserva se le haga +1 a esa propiedad, luego usar el listar todos los apartamentos y solo mostrar el id y las veces de reserva en vez de todo
                 break;
 
@@ -195,7 +196,7 @@ while (input != "fin")
                 Console.WriteLine("Reservas del huésped");
                 Console.WriteLine("Ingresar ID del huésped:");
                 int idHuesped = int.Parse(Console.ReadLine() ?? string.Empty);
-                Reserva.MostrarReservasPorHuesped(idHuesped);
+                Controladora.MostrarReservasPorHuesped(idHuesped);
                 break;
             
             case 5:
@@ -212,19 +213,23 @@ while (input != "fin")
                 break;
 
             case 7:
+                Console.WriteLine("Duración Promedio de Estadías");
+                Controladora.EstPromedioDurEst();
+                break;
+
+            case 8:
                 Console.WriteLine("Informacion del Centro de Convenciones");
-                Huesped.MostrarInformacionConvencionesYEsparcimiento();
+                Controladora.MostrarInformacionConvencionesYEsparcimiento();
                 break;
             
-            case 8:
+            case 9:
                 Console.WriteLine();
                 Console.WriteLine("Informacion del parque:");
-                Huesped.MostrarInformacionParque();
+                Controladora.MostrarInformacionParque();
                 break;
 
             default:
                 Console.WriteLine("Opcion no valida");
-                Console.WriteLine("Le erraste feo");
                 break;
         }
     }

@@ -39,24 +39,6 @@ namespace RefugioDelSol
             Console.WriteLine("---------------------------------------------------------------");
         }
 
-        public static void MostrarInformacionConvencionesYEsparcimiento()
-        {
-            
-            Console.WriteLine("---------------------------------------------------------------------------------------");
-            Console.WriteLine("El centro de convenciones y esparcimiento es de acceso libre para todos los huéspedes.");
-            Console.WriteLine("---------------------------------------------------------------------------------------");
-            Console.WriteLine();
-        }
-
-        public static void MostrarInformacionParque()
-        {
-            Console.WriteLine("---------------------------------------------------------------");
-            Console.WriteLine("El parque Este es de acceso libre y se pueden llevar mascotas.");
-            Console.WriteLine("El acceso al parque es por helicóptero o submarino.");
-             Console.WriteLine("--------------------------------------------------------------");
-            Console.WriteLine();
-        }
-
         public static Huesped PedirDatosHuesped(){
 
             Console.WriteLine("Agregar huesped");
