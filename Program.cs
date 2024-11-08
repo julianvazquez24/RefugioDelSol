@@ -171,7 +171,7 @@ while (input != "fin")
                 break;
 
             case 2:
-                Console.WriteLine("Apartamentos con mas reservas");
+                
                 Controladora.ListarApartamentosConMasReservas();
                 // tendriamos que hacer una propiedad de el apartamento o de la reserva que se llame vecesReservado, y que cuando se agrega una reserva se le haga +1 a esa propiedad, luego usar el listar todos los apartamentos y solo mostrar el id y las veces de reserva en vez de todo
                 break;
